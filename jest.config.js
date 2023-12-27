@@ -11,11 +11,11 @@ export default {
   coveragePathIgnorePatterns: [
     'src/main.tsx',
     'src/config.tsx',
-    'src/services/storage.tsx',
+    'src/services/storage.ts',
+    'src/services/images.ts',
     'src/store/store.tsx',
     'src/pages/*.ts',
-    'src/services/images.ts',
-    'src/entities/*.ts',
-    'src/types/*.tsx',
+    'src/models/*.ts',
+    'src/types/*.ts',
   ],
 };
