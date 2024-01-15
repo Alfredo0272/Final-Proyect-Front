@@ -1,4 +1,5 @@
 import { Beer } from './beer.model';
+import { Pub } from './pub.model';
 
 export type LoginUser = {
   email: string;
@@ -12,5 +13,6 @@ export type User = LoginUser & {
   age: number;
   userName: string;
   probada: Beer[];
+  visitado: Pub[];
   role: 'Admin' | 'User';
 };
