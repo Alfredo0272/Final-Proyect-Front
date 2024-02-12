@@ -5,7 +5,7 @@ import style from './Login.module.scss';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
-export default function Login() {
+export default function Home() {
   const [hasLogin, setHasLogin] = useState(false);
   const { login } = useUsers();
 
@@ -35,11 +35,10 @@ export default function Login() {
       });
     } else {
       try {
-        console.log(loggedUser);
         await login(loggedUser);
         setHasLogin(true);
         element.reset();
-        navigate('/beers');
+        navigate('/pubs');
       } catch (error) {
         console.error('Error during login:', error);
       }

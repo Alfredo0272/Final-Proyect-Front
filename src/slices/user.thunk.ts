@@ -40,3 +40,16 @@ export const registerThunk = createAsyncThunk<
   const result = await repo.registerUser(newUser);
   return result;
 });
+
+export const addBeerToTasteThunk = createAsyncThunk<
+  User,
+  {
+    beerId: string;
+    repo: UsersRepo;
+    userStore: LocalStorage<{ token: string }>;
+  }
+>('addBeer', async ({ beerId, repo, userStore }) => {
+  const { token } = userStore.get()!;
+  const result = await repo.addBeertoTaste(beerId, token);
+  return result;
+});

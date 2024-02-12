@@ -1,4 +1,4 @@
 export const serverUrl =
   location.hostname === 'localhost'
-    ? 'http://localhost:1969/'
-    : 'https://render';
+    ? 'https://final-proyect-alfredo.onrender.com'
+    : 'http://localhost:1969';
