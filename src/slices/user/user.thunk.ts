@@ -1,8 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { LoginResponse } from '../types/user.login';
-import { UsersRepo } from '../services/users/api.repo.users';
-import { LocalStorage } from '../services/local.storage';
-import { LoginUser, User } from '../models/user.model';
+import { LoginResponse } from '../../types/user.login';
+import { UsersRepo } from '../../services/users/api.repo.users';
+import { LocalStorage } from '../../services/local.storage';
+import { LoginUser, User } from '../../models/user.model';
+import { Beer } from '../../models/beer.model';
 
 export const loginThunk = createAsyncThunk<
   LoginResponse,
@@ -44,12 +45,25 @@ export const registerThunk = createAsyncThunk<
 export const addBeerToTasteThunk = createAsyncThunk<
   User,
   {
-    beerId: string;
+    beer: Beer['id'];
     repo: UsersRepo;
     userStore: LocalStorage<{ token: string }>;
   }
->('addBeer', async ({ beerId, repo, userStore }) => {
+>('addBeer', async ({ beer, repo, userStore }) => {
   const { token } = userStore.get()!;
-  const result = await repo.addBeertoTaste(beerId, token);
+  const result = await repo.addBeertoTaste(beer, token);
+  return result;
+});
+
+export const delBeerToTasteThunk = createAsyncThunk<
+  User,
+  {
+    beer: Beer['id'];
+    repo: UsersRepo;
+    userStore: LocalStorage<{ token: string }>;
+  }
+>('addBeer', async ({ beer, repo, userStore }) => {
+  const { token } = userStore.get()!;
+  const result = await repo.addBeertoTaste(beer, token);
   return result;
 });

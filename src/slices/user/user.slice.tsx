@@ -1,7 +1,12 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { User } from '../models/user.model';
-import { addBeerToTasteThunk, loginThunk, loginTokenThunk } from './user.thunk';
-import { LoginResponse } from '../types/user.login';
+import { User } from '../../models/user.model';
+import {
+  addBeerToTasteThunk,
+  delBeerToTasteThunk,
+  loginThunk,
+  loginTokenThunk,
+} from './user.thunk';
+import { LoginResponse } from '../../types/user.login';
 
 type LoginState = 'logout' | 'logging' | 'error' | 'logged';
 
@@ -24,7 +29,6 @@ const userSlice = createSlice({
     logout(state: UserState) {
       state.loggedUser = null;
       state.token = '';
-
       return state;
     },
     setCurrentUser(state: UserState, { payload }: PayloadAction<User>) {
@@ -58,6 +62,16 @@ const userSlice = createSlice({
       addBeerToTasteThunk.fulfilled,
       (state: UserState, { payload }: PayloadAction<User>) => {
         state.loggedUser = payload;
+        state.loginLoadState = 'logged';
+        return state;
+      }
+    );
+    builder.addCase(
+      delBeerToTasteThunk.fulfilled,
+      (state: UserState, { payload }: PayloadAction<User>) => {
+        state.loggedUser = payload;
+        state.loginLoadState = 'logged';
+        return state;
       }
     );
   },

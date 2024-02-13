@@ -1,4 +1,4 @@
-import { User } from '../models/user.model';
+import { User } from '../../models/user.model';
 import userSlice, { logout } from './user.slice';
 import usersReducer, { UserState } from './user.slice';
 describe('Given the users slice reducer', () => {

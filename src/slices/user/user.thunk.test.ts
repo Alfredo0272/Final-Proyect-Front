@@ -1,7 +1,7 @@
-import { LoginUser } from '../models/user.model';
-import { LocalStorage } from '../services/local.storage';
-import { UsersRepo } from '../services/users/api.repo.users';
-import { appStore } from '../store/store';
+import { LoginUser } from '../../models/user.model';
+import { LocalStorage } from '../../services/local.storage';
+import { UsersRepo } from '../../services/users/api.repo.users';
+import { appStore } from '../../store/store';
 import { loginThunk, loginTokenThunk, registerThunk } from './user.thunk';
 
 describe('Given...', () => {

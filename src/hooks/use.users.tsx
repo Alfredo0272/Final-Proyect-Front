@@ -6,10 +6,10 @@ import {
   addBeerToTasteThunk,
   loginThunk,
   loginTokenThunk,
-} from '../slices/user.thunk';
+} from '../slices/user/user.thunk';
 import { LoginUser, User } from '../models/user.model';
-import * as ac from '../slices/user.slice';
-import { logout } from '../slices/user.slice';
+import * as ac from '../slices/user/user.slice';
+import { logout } from '../slices/user/user.slice';
 import { useMemo } from 'react';
 import { Beer } from '../models/beer.model';
 
@@ -44,21 +44,24 @@ export function useUsers() {
     userStore.remove();
   };
 
-  const addBeer = (beerId: string) => {
-    const userStoreData = userStore.get();
-    if (userStoreData) {
-      dispatch(
-        addBeerToTasteThunk({
-          beerId,
-          repo,
-          userStore,
-        })
-      );
-    }
+  const addBeer = async (beer: Beer['id'], _token: string) => {
+    dispatch(
+      addBeerToTasteThunk({
+        beer,
+        repo,
+        userStore,
+      })
+    );
   };
 
-  const delBeer = async (beer: Beer['id'], token: string) => {
-    repo.delBeertoTaste(beer, token);
+  const delBeer = async (beer: Beer['id'], _token: string) => {
+    dispatch(
+      addBeerToTasteThunk({
+        beer,
+        repo,
+        userStore,
+      })
+    );
   };
 
   return {

@@ -1,6 +1,7 @@
 import { useUsers } from '../../hooks/use.users';
-// Import { Beer } from '../../models/beer.model';
-// import { Pub } from '../../models/pub.model';
+import { Beer } from '../../models/beer.model';
+import BeerCard from '../cards/beer.card';
+// Import { Pub } from '../../models/pub.model';
 import style from './Beer.details.module.scss';
 
 export default function UserDetails() {
@@ -31,12 +32,12 @@ export default function UserDetails() {
         {loggedUser!.visitado.map((item: Pub) => (
           <PubCard key={item.id} pub={item} />
         ))}
-      </ul>
+      </ul> */}
       <ul className="Beer-list">
         {loggedUser!.probada.map((item: Beer) => (
           <BeerCard key={item.id} beer={item} />
         ))}
-      </ul> */}
+      </ul>
     </>
   );
 }

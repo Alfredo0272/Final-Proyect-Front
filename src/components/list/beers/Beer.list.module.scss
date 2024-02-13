@@ -1,0 +1,23 @@
+@import '../../resorces';
+
+.list {
+  list-style: none;
+  margin-bottom: 1rem;
+  h2 {
+    font-size: 5vh;
+    font-family: Libre Franklin;
+    align-items: center;
+    gap: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  ul {
+    display: grid;
+    gap: 1rem;
+    grid-auto-flow: dense;
+    align-items: center;
+    justify-content: center;
+    grid-template-rows: repeat(auto-fill, minmax(5rem, 1fr));
+  }
+}
