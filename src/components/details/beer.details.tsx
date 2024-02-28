@@ -1,34 +1,42 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useBeers } from '../../hooks/use.beers';
 import style from './Beer.details.module.scss';
 import { makeImageURL } from '../../services/images';
 import { useUsers } from '../../hooks/use.users';
 import { useParams, useLocation } from 'react-router-dom';
+import { usePubs } from '../../hooks/use.pubs';
 
 export default function BeerDetails() {
   const { currentBeerItem, loadBeerById } = useBeers();
   const { addBeer, delBeer, userStore } = useUsers();
+  const { pubs, addBeerToTap, loadPubs } = usePubs();
   const { beer } = useParams();
   const location = useLocation();
+  const [pub, setSelectedPub] = useState<string | null>(null);
+  const [showPubList, setShowPubList] = useState(false);
+  const token = userStore.get()?.token;
 
   useEffect(() => {
     loadBeerById();
-  }, [loadBeerById]);
+    loadPubs();
+  }, [loadBeerById, loadPubs]);
 
   const desktopDetailBeerImg =
     currentBeerItem?.beerImg.publicId &&
     makeImageURL(currentBeerItem.beerImg.publicId, 550);
 
   const handleAddBeer = () => {
-    const token = userStore.get()?.token;
     addBeer(beer!, token!);
   };
 
-  const handleDelBeer = () => {
-    const token = userStore.get()?.token;
-    if (token) {
-      delBeer(beer!, token);
+  const handleAddBeerToTap = () => {
+    if (pub) {
+      addBeerToTap(beer!, pub, token!);
     }
+  };
+
+  const handleDelBeer = () => {
+    delBeer(beer!, token!);
   };
 
   return (
@@ -39,28 +47,57 @@ export default function BeerDetails() {
         <img src={desktopDetailBeerImg} alt="image"></img>
         <ul>
           <li>
-            NAME: <span>{currentBeerItem!.name}</span>
+            NAME: <span>{currentBeerItem?.name}</span>
           </li>
           <li>
-            BREWER: <span>{currentBeerItem!.brewer}</span>
+            BREWER: <span>{currentBeerItem?.brewer}</span>
           </li>
           <li>
-            STYLE: <span>{currentBeerItem!.style}</span>
+            STYLE: <span>{currentBeerItem?.style}</span>
           </li>
           <li>
-            ALCOHOL: <span>{currentBeerItem!.alcohol}</span>
+            ALCOHOL: <span>{currentBeerItem?.alcohol}</span>
           </li>
 
           <button onClick={handleAddBeer} className={style.button}>
             {' '}
-            ❤️
+            ❤️{' '}
           </button>
 
-          {location.pathname === `/details/${currentBeerItem!.id}` && (
+          {location.pathname === `/details/${currentBeerItem?.id}` && (
             <button onClick={handleDelBeer} className={style.button}>
               {' '}
-              🗑
+              🗑{' '}
             </button>
+          )}
+
+          <button onClick={() => setShowPubList(true)} className={style.button}>
+            {' '}
+            🔼{' '}
+          </button>
+
+          {showPubList && (
+            <div className={style.pubList}>
+              <h3>Select a pub:</h3>
+              <ul>
+                {pubs.map((pub) => (
+                  <li key={pub.id} onClick={() => setSelectedPub(pub.id)}>
+                    {' '}
+                    {pub.name}{' '}
+                  </li>
+                ))}
+              </ul>
+              <button
+                onClick={() => {
+                  setShowPubList(false);
+                  handleAddBeerToTap();
+                }}
+                className={style.button}
+              >
+                {' '}
+                Confirm{' '}
+              </button>
+            </div>
           )}
         </ul>
       </div>

@@ -1,0 +1,36 @@
+@import '../../resources';
+form {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  border-radius: 10px;
+  justify-content: space-around;
+  height: 70vh;
+  width: 50%;
+  margin: 0;
+  margin-left: 25%;
+  margin-top: 2rem;
+  font-family: Libre Franklin;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  align-items: center;
+
+  .inputs {
+    border-radius: 2rem;
+    display: flow-root;
+    flex-direction: row;
+    align-items: center;
+    margin: 1rem auto;
+    fill: #d9d9d9;
+    height: 1.375rem;
+    flex-shrink: 0;
+  }
+
+  .submit {
+    align-content: center;
+    margin: 1rem auto;
+    flex-shrink: 0;
+  }
+}

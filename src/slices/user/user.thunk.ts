@@ -62,8 +62,8 @@ export const delBeerToTasteThunk = createAsyncThunk<
     repo: UsersRepo;
     userStore: LocalStorage<{ token: string }>;
   }
->('addBeer', async ({ beer, repo, userStore }) => {
+>('delBeer', async ({ beer, repo, userStore }) => {
   const { token } = userStore.get()!;
-  const result = await repo.addBeertoTaste(beer, token);
+  const result = await repo.delBeerFromTaste(beer, token);
   return result;
 });

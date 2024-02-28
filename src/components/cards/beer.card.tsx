@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom';
-
 import { Beer } from '../../models/beer.model';
 import { makeImageURL } from '../../services/images';
 import { useEffect } from 'react';
 import { useBeers } from '../../hooks/use.beers';
-import style from './Beer.card.module.scss';
+import style from './Cards.module.scss';
 
 type Props = {
   beer: Beer;

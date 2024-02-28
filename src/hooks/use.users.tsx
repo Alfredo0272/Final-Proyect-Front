@@ -14,7 +14,11 @@ import { useMemo } from 'react';
 import { Beer } from '../models/beer.model';
 
 export function useUsers() {
-  const userStore = new LocalStorage<{ token: string; id: string }>('user');
+  const userStore = new LocalStorage<{
+    token: string;
+    id: string;
+    role: string;
+  }>('user');
   const dispatch = useDispatch<AppDispatch>();
   const repo = useMemo(() => new UsersRepo(), []);
   const { loggedUser } = useSelector((state: RootState) => state.usersState);

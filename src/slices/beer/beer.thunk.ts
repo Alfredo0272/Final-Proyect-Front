@@ -7,9 +7,10 @@ export const createBeerThunk = createAsyncThunk<
   {
     newBeer: FormData;
     repo: ApiRepoBeers;
+    token: string;
   }
->('create', async ({ newBeer, repo }) => {
-  const result = await repo.createBeer(newBeer);
+>('create', async ({ newBeer, repo, token }) => {
+  const result = await repo.createBeer(newBeer, token);
   return result;
 });
 

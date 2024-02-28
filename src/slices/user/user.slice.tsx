@@ -29,51 +29,49 @@ const userSlice = createSlice({
     logout(state: UserState) {
       state.loggedUser = null;
       state.token = '';
-      return state;
     },
     setCurrentUser(state: UserState, { payload }: PayloadAction<User>) {
       state.loggedUser = payload;
-      return state;
     },
   },
   extraReducers(builder) {
-    builder.addCase(loginThunk.rejected, (state: UserState) => {
-      state.loginLoadState = 'error';
-    });
-    builder.addCase(loginThunk.pending, (state: UserState) => {
-      state.loginLoadState = 'logging';
-    });
-    builder.addCase(
-      loginThunk.fulfilled,
-      (state: UserState, { payload }: PayloadAction<LoginResponse>) => {
-        state.loggedUser = payload.user;
-        state.token = payload.token;
-      }
-    );
-    builder.addCase(
-      loginTokenThunk.fulfilled,
-      (state: UserState, { payload }: PayloadAction<LoginResponse>) => {
-        state.loggedUser = payload.user;
-        state.loginLoadState = 'logged';
-        state.token = payload.token;
-      }
-    );
-    builder.addCase(
-      addBeerToTasteThunk.fulfilled,
-      (state: UserState, { payload }: PayloadAction<User>) => {
-        state.loggedUser = payload;
-        state.loginLoadState = 'logged';
-        return state;
-      }
-    );
-    builder.addCase(
-      delBeerToTasteThunk.fulfilled,
-      (state: UserState, { payload }: PayloadAction<User>) => {
-        state.loggedUser = payload;
-        state.loginLoadState = 'logged';
-        return state;
-      }
-    );
+    builder
+      .addCase(loginThunk.rejected, (state: UserState) => {
+        state.loginLoadState = 'error';
+      })
+      .addCase(loginThunk.pending, (state: UserState) => {
+        state.loginLoadState = 'logging';
+      })
+      .addCase(
+        loginThunk.fulfilled,
+        (state: UserState, { payload }: PayloadAction<LoginResponse>) => {
+          state.loggedUser = payload.user;
+          state.token = payload.token;
+          state.loginLoadState = 'logged';
+        }
+      )
+      .addCase(
+        loginTokenThunk.fulfilled,
+        (state: UserState, { payload }: PayloadAction<LoginResponse>) => {
+          state.loggedUser = payload.user;
+          state.loginLoadState = 'logged';
+          state.token = payload.token;
+        }
+      )
+      .addCase(
+        addBeerToTasteThunk.fulfilled,
+        (state: UserState, { payload }: PayloadAction<User>) => {
+          state.loggedUser = payload;
+          state.loginLoadState = 'logged';
+        }
+      )
+      .addCase(
+        delBeerToTasteThunk.fulfilled,
+        (state: UserState, { payload }: PayloadAction<User>) => {
+          state.loggedUser = payload;
+          state.loginLoadState = 'logged';
+        }
+      );
   },
 });
 

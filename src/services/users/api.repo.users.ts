@@ -69,7 +69,7 @@ export class UsersRepo {
     return response.json();
   }
 
-  async delBeertoTaste(beer: Beer['id'], token: string): Promise<User> {
+  async delBeerFromTaste(beer: Beer['id'], token: string): Promise<User> {
     const url = this.apiUrl + 'delBeer/' + beer;
     const response = await fetch(url, {
       method: 'PATCH',

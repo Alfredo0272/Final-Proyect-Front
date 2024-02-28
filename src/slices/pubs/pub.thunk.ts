@@ -1,21 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Pub } from '../../models/pub.model';
 import { ApiRepoPubs } from '../../services/pubs/api.repo.pubs';
-import { LocalStorage } from '../../services/local.storage';
-import { User } from '../../models/user.model';
 import { Beer } from '../../models/beer.model';
 
 export const createPubThunk = createAsyncThunk<
   Pub,
   {
     newPub: FormData;
-    user: User['id'];
     repo: ApiRepoPubs;
-    tokenStorage: LocalStorage<{ token: string }>;
+    token: string;
   }
->('create', async ({ newPub, user, repo, tokenStorage }) => {
-  const { token } = tokenStorage.get()!;
-  const result = await repo.createPub(newPub, user, token);
+>('create', async ({ newPub, repo, token }) => {
+  const result = await repo.createPub(newPub, token);
   return result;
 });
 
@@ -45,24 +41,22 @@ export const addBeerToTapsThunk = createAsyncThunk<
     pub: Pub['id'];
     beer: Beer['id'];
     repo: ApiRepoPubs;
-    tokenStorage: LocalStorage<{ token: string }>;
+    token: string;
   }
->('addBeer', async ({ beer, pub, tokenStorage, repo }) => {
-  const { token } = tokenStorage.get()!;
+>('addBeerToTap', async ({ beer, pub, token, repo }) => {
   const result = await repo.addBeerToTaps(beer, pub, token);
   return result;
 });
 
-export const delBeerfromTapsThunk = createAsyncThunk<
+export const delBeerFromTapsThunk = createAsyncThunk<
   Pub,
   {
     pub: Pub['id'];
     beer: Beer['id'];
     repo: ApiRepoPubs;
-    tokenStorage: LocalStorage<{ token: string }>;
+    token: string;
   }
->('addBeer', async ({ beer, pub, tokenStorage, repo }) => {
-  const { token } = tokenStorage.get()!;
+>('addBeerfromTap', async ({ beer, pub, token, repo }) => {
   const result = await repo.delBeerFromTaps(beer, pub, token);
   return result;
 });

@@ -1,16 +1,12 @@
 import { serverUrl } from '../../config';
 import { Beer } from '../../models/beer.model';
 import { Pub } from '../../models/pub.model';
-import { User } from '../../models/user.model';
 
 export class ApiRepoPubs {
   apiUrl = serverUrl + '/pub/';
-  async createPub(
-    newPub: FormData,
-    userId: User['id'],
-    token: string
-  ): Promise<Pub> {
-    const url = `${this.apiUrl}create/` + userId;
+
+  async createPub(newPub: FormData, token: string): Promise<Pub> {
+    const url = `${this.apiUrl}create/`;
     const response = await fetch(url, {
       method: 'POST',
       body: newPub,
@@ -32,7 +28,7 @@ export class ApiRepoPubs {
     return response.json();
   }
 
-  async loadPubById(pubId: Beer['id']): Promise<Pub> {
+  async loadPubById(pubId: Pub['id']): Promise<Pub> {
     const response = await fetch(`${this.apiUrl}create/` + pubId);
     if (!response.ok)
       throw new Error(response.status + ' ' + response.statusText);

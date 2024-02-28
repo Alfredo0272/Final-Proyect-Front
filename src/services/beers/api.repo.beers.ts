@@ -3,12 +3,12 @@ import { Beer } from '../../models/beer.model';
 
 export class ApiRepoBeers {
   userToken: string | null;
-  apiUrl = serverUrl + '/beer';
+  apiUrl = serverUrl + '/beer/';
   constructor() {
     this.userToken = localStorage.getItem('user') || null;
   }
 
-  async createBeer(newBeer: FormData): Promise<Beer> {
+  async createBeer(newBeer: FormData, token: string): Promise<Beer> {
     const finalid = JSON.parse(this.userToken!);
     const url = this.apiUrl + finalid;
     try {
@@ -16,7 +16,7 @@ export class ApiRepoBeers {
         method: 'POST',
         body: newBeer,
         headers: {
-          Authorization: 'Bearer ' + this.userToken,
+          Authorization: `Bearer ${token}`,
         },
       });
 

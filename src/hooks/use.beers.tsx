@@ -6,6 +6,7 @@ import { loadBeerThunks, loadBeerByIdThunk } from '../slices/beer/beer.thunk';
 import { useParams } from 'react-router-dom';
 import { Beer } from '../models/beer.model';
 import { setCurrentBeerItem } from '../slices/beer/beer.slice';
+import { LocalStorage } from '../services/local.storage';
 
 export function useBeers() {
   const { currentBeerItem, beers } = useSelector(
@@ -13,9 +14,18 @@ export function useBeers() {
   );
   const dispatch = useDispatch<AppDispatch>();
   const repo = useMemo(() => new ApiRepoBeers(), []);
+  const userStore = new LocalStorage<{
+    token: string;
+    id: string;
+    role: string;
+  }>('user');
 
   const createBeer = (newBeer: FormData) => {
-    repo.createBeer(newBeer);
+    const userStoreData = userStore.get();
+    if (userStoreData) {
+      const { token } = userStoreData;
+      repo.createBeer(newBeer, token);
+    }
   };
 
   const loadBeer = useCallback(async () => {

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useUsers } from '../../hooks/use.users';
-import Home from '../home/home';
+import { Router } from '../router/router';
 
 export function App() {
   const { loginWithToken } = useUsers();
@@ -11,7 +11,7 @@ export function App() {
 
   return (
     <>
-      <Home></Home>
+      <Router></Router>
     </>
   );
 }

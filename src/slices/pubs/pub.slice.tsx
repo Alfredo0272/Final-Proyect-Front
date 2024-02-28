@@ -3,7 +3,7 @@ import { Pub } from '../../models/pub.model';
 import {
   addBeerToTapsThunk,
   createPubThunk,
-  delBeerfromTapsThunk,
+  delBeerFromTapsThunk,
   loadPubThunk,
 } from './pub.thunk';
 
@@ -40,9 +40,6 @@ const pubsSlice = createSlice({
     builder.addCase(addBeerToTapsThunk.rejected, (state: PubState) => {
       state.pubState = 'error';
     });
-    builder.addCase(delBeerfromTapsThunk.rejected, (state: PubState) => {
-      state.pubState = 'error';
-    });
     builder.addCase(createPubThunk.pending, (state: PubState) => {
       state.pubState = 'loading';
     });
@@ -52,22 +49,18 @@ const pubsSlice = createSlice({
     builder.addCase(addBeerToTapsThunk.pending, (state: PubState) => {
       state.pubState = 'loading';
     });
-    builder.addCase(delBeerfromTapsThunk.pending, (state: PubState) => {
-      state.pubState = 'loading';
-    });
     builder.addCase(
       createPubThunk.fulfilled,
       (state: PubState, { payload }) => {
         state.currentPubItem = payload;
         state.pubState = 'idle';
-        return state;
       }
     );
     builder.addCase(
       loadPubThunk.fulfilled,
       (state: PubState, { payload }: PayloadAction<Pub[]>) => {
         state.pubs = payload;
-        return state;
+        state.pubState = 'idle';
       }
     );
     builder.addCase(
@@ -78,7 +71,7 @@ const pubsSlice = createSlice({
       }
     );
     builder.addCase(
-      delBeerfromTapsThunk.fulfilled,
+      delBeerFromTapsThunk.fulfilled,
       (state: PubState, { payload }: PayloadAction<Pub>) => {
         state.currentPubItem = payload;
         return state;

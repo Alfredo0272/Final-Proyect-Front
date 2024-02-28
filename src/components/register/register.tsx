@@ -3,6 +3,7 @@ import { useUsers } from '../../hooks/use.users';
 import { User } from '../../models/user.model';
 import style from './Register.module.scss';
 import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 
 export default function Register() {
   const [hasRegister, setHasRegister] = useState(false);
@@ -90,9 +91,9 @@ export default function Register() {
       {hasRegister && (
         <div>
           <p>Registro correcto</p>
-          {/* <Link to={'/home/'}>
+          <Link to={'/home/'}>
             <button type="button">Continuar</button>
-          </Link> */}
+          </Link>
         </div>
       )}
     </>
