@@ -18,7 +18,6 @@ export default function BeerCard({ beer }: Props) {
 
   const despocktBeerImg =
     beer.beerImg.publicId && makeImageURL(beer.beerImg.publicId, 160);
-  console.log('beers card despockBeer Imagen', despocktBeerImg);
   return (
     <div className={style.main}>
       <div className={style.details}>

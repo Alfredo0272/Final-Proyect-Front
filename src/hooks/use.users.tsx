@@ -4,6 +4,7 @@ import { AppDispatch, RootState } from '../store/store';
 import { UsersRepo } from '../services/users/api.repo.users';
 import {
   addBeerToTasteThunk,
+  delBeerToTasteThunk,
   loginThunk,
   loginTokenThunk,
 } from '../slices/user/user.thunk';
@@ -60,7 +61,7 @@ export function useUsers() {
 
   const delBeer = async (beer: Beer['id'], _token: string) => {
     dispatch(
-      addBeerToTasteThunk({
+      delBeerToTasteThunk({
         beer,
         repo,
         userStore,

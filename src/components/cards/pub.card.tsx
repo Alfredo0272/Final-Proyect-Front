@@ -9,7 +9,7 @@ type Props = {
   pub: Pub;
 };
 
-export default function BeerCard({ pub }: Props) {
+export default function PubCard({ pub }: Props) {
   const { loadPubs, handlePubDetails } = usePubs();
 
   useEffect(() => {

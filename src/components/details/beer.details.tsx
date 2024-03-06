@@ -3,14 +3,14 @@ import { useBeers } from '../../hooks/use.beers';
 import style from './Beer.details.module.scss';
 import { makeImageURL } from '../../services/images';
 import { useUsers } from '../../hooks/use.users';
-import { useParams, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { usePubs } from '../../hooks/use.pubs';
 
 export default function BeerDetails() {
   const { currentBeerItem, loadBeerById } = useBeers();
   const { addBeer, delBeer, userStore } = useUsers();
   const { pubs, addBeerToTap, loadPubs } = usePubs();
-  const { beer } = useParams();
+  const beer = currentBeerItem?.id;
   const location = useLocation();
   const [pub, setSelectedPub] = useState<string | null>(null);
   const [showPubList, setShowPubList] = useState(false);
@@ -59,17 +59,17 @@ export default function BeerDetails() {
             ALCOHOL: <span>{currentBeerItem?.alcohol}</span>
           </li>
 
-          <button onClick={handleAddBeer} className={style.button}>
-            {' '}
-            ❤️{' '}
-          </button>
-
           {location.pathname === `/details/${currentBeerItem?.id}` && (
-            <button onClick={handleDelBeer} className={style.button}>
+            <button onClick={handleAddBeer} className={style.button}>
               {' '}
-              🗑{' '}
+              ❤️{' '}
             </button>
           )}
+
+          <button onClick={handleDelBeer} className={style.button}>
+            {' '}
+            🗑{' '}
+          </button>
 
           <button onClick={() => setShowPubList(true)} className={style.button}>
             {' '}

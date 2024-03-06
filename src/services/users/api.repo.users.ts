@@ -58,10 +58,12 @@ export class UsersRepo {
 
   async addBeertoTaste(beer: Beer['id'], token: string): Promise<User> {
     const url = this.apiUrl + 'addBeer/' + beer;
+    console.log('addbertotaste url:', url);
+    console.log('addbertotaste token:', token);
     const response = await fetch(url, {
       method: 'PATCH',
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: 'Bearer ' + token,
       },
     });
     if (!response.ok)

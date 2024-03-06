@@ -45,7 +45,7 @@ export const registerThunk = createAsyncThunk<
 export const addBeerToTasteThunk = createAsyncThunk<
   User,
   {
-    beer: Beer['id'];
+    beer: string;
     repo: UsersRepo;
     userStore: LocalStorage<{ token: string }>;
   }
