@@ -29,7 +29,7 @@ export const loadPubByIdThunk = createAsyncThunk<
     pubID: Pub['id'];
     repo: ApiRepoPubs;
   }
->('loadbyid', async (params) => {
+>('loadPubByid', async (params) => {
   const { pubID, repo } = params;
   const pubs = await repo.loadPubById(pubID);
   return pubs;
@@ -38,13 +38,13 @@ export const loadPubByIdThunk = createAsyncThunk<
 export const addBeerToTapsThunk = createAsyncThunk<
   Pub,
   {
-    pub: Pub['id'];
+    pub: Pub;
     beer: Beer['id'];
     repo: ApiRepoPubs;
     token: string;
   }
->('addBeerToTap', async ({ beer, pub, token, repo }) => {
-  const result = await repo.addBeerToTaps(beer, pub, token);
+>('addBeerToTap', async ({ pub, beer, token, repo }) => {
+  const result = await repo.addBeerToTaps(pub, beer, token);
   return result;
 });
 

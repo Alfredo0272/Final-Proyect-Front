@@ -1,5 +1,6 @@
 import { serverUrl } from '../../config';
 import { Beer } from '../../models/beer.model';
+import { Pub } from '../../models/pub.model';
 import { LoginUser, User } from '../../models/user.model';
 import { LoginResponse } from '../../types/user.login';
 
@@ -58,8 +59,6 @@ export class UsersRepo {
 
   async addBeertoTaste(beer: Beer['id'], token: string): Promise<User> {
     const url = this.apiUrl + 'addBeer/' + beer;
-    console.log('addbertotaste url:', url);
-    console.log('addbertotaste token:', token);
     const response = await fetch(url, {
       method: 'PATCH',
       headers: {
@@ -77,6 +76,32 @@ export class UsersRepo {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok)
+      throw new Error(response.status + ' ' + response.statusText);
+    return response.json();
+  }
+
+  async addPubtoVisited(pub: Pub['id'], token: string): Promise<User> {
+    const url = this.apiUrl + 'addPub/' + pub;
+    const response = await fetch(url, {
+      method: 'PATCH',
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    });
+    if (!response.ok)
+      throw new Error(response.status + ' ' + response.statusText);
+    return response.json();
+  }
+
+  async delPubtoVisited(pub: Pub['id'], token: string): Promise<User> {
+    const url = this.apiUrl + 'delPub/' + pub;
+    const response = await fetch(url, {
+      method: 'PATCH',
+      headers: {
+        Authorization: 'Bearer ' + token,
       },
     });
     if (!response.ok)

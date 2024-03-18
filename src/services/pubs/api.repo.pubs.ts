@@ -29,22 +29,19 @@ export class ApiRepoPubs {
   }
 
   async loadPubById(pubId: Pub['id']): Promise<Pub> {
-    const response = await fetch(`${this.apiUrl}create/` + pubId);
+    const response = await fetch(this.apiUrl + pubId);
     if (!response.ok)
       throw new Error(response.status + ' ' + response.statusText);
     return response.json();
   }
 
-  async addBeerToTaps(
-    beer: Beer['id'],
-    pub: Pub['id'],
-    token: string
-  ): Promise<Pub> {
+  async addBeerToTaps(pub: Pub, beer: Beer['id'], token: string): Promise<Pub> {
     const url = `${this.apiUrl}addBeer/` + beer;
     const response = await fetch(url, {
       method: 'PATCH',
       body: JSON.stringify(pub),
       headers: {
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
     });
@@ -63,6 +60,7 @@ export class ApiRepoPubs {
       method: 'PATCH',
       body: JSON.stringify(pub),
       headers: {
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
     });

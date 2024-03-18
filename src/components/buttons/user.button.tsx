@@ -34,11 +34,12 @@ export function UserButtons() {
               <button className={style.route}>Create</button>
             </Link>
           )}
-          {location.pathname !== '/addPubs' && (
-            <Link to="/addPubs" className={style.container}>
-              <button className={style.route}>Registre Pub</button>
-            </Link>
-          )}
+          {location.pathname !== '/addPubs' &&
+            currentUserItem.role === 'Admin' && (
+              <Link to="/addPubs" className={style.container}>
+                <button className={style.route}>Registre Pub</button>
+              </Link>
+            )}
           <Link to="/beers" className={style.container}>
             <button className={style.route}>Beers</button>
           </Link>

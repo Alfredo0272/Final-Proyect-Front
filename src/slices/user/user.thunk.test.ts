@@ -21,6 +21,7 @@ describe('Given...', () => {
       } as unknown as LocalStorage<{
         token: string;
         id: '';
+        role: 'admin';
       }>,
     };
 

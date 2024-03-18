@@ -4,7 +4,9 @@ import { AppDispatch, RootState } from '../store/store';
 import { UsersRepo } from '../services/users/api.repo.users';
 import {
   addBeerToTasteThunk,
+  addPubtoVisitedThunk,
   delBeerToTasteThunk,
+  delPubtoVisitedThunk,
   loginThunk,
   loginTokenThunk,
 } from '../slices/user/user.thunk';
@@ -13,6 +15,7 @@ import * as ac from '../slices/user/user.slice';
 import { logout } from '../slices/user/user.slice';
 import { useMemo } from 'react';
 import { Beer } from '../models/beer.model';
+import { Pub } from '../models/pub.model';
 
 export function useUsers() {
   const userStore = new LocalStorage<{
@@ -69,6 +72,26 @@ export function useUsers() {
     );
   };
 
+  const addPub = async (pub: Pub['id'], _token: string) => {
+    dispatch(
+      addPubtoVisitedThunk({
+        pub,
+        repo,
+        userStore,
+      })
+    );
+  };
+
+  const delPub = async (pub: Pub['id'], _token: string) => {
+    dispatch(
+      delPubtoVisitedThunk({
+        pub,
+        repo,
+        userStore,
+      })
+    );
+  };
+
   return {
     login,
     loginWithToken,
@@ -77,6 +100,8 @@ export function useUsers() {
     makeLogOut,
     addBeer,
     delBeer,
+    addPub,
+    delPub,
     loggedUser,
     userStore,
   };

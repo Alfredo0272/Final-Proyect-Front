@@ -2,7 +2,9 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { User } from '../../models/user.model';
 import {
   addBeerToTasteThunk,
+  addPubtoVisitedThunk,
   delBeerToTasteThunk,
+  delPubtoVisitedThunk,
   loginThunk,
   loginTokenThunk,
 } from './user.thunk';
@@ -67,6 +69,20 @@ const userSlice = createSlice({
       )
       .addCase(
         delBeerToTasteThunk.fulfilled,
+        (state: UserState, { payload }: PayloadAction<User>) => {
+          state.loggedUser = payload;
+          state.loginLoadState = 'logged';
+        }
+      )
+      .addCase(
+        addPubtoVisitedThunk.fulfilled,
+        (state: UserState, { payload }: PayloadAction<User>) => {
+          state.loggedUser = payload;
+          state.loginLoadState = 'logged';
+        }
+      )
+      .addCase(
+        delPubtoVisitedThunk.fulfilled,
         (state: UserState, { payload }: PayloadAction<User>) => {
           state.loggedUser = payload;
           state.loginLoadState = 'logged';

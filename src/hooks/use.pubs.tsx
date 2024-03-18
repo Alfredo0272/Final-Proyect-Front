@@ -49,11 +49,7 @@ export function usePubs() {
     dispatch(setCurrentPubItem(pub));
   };
 
-  const addBeerToTap = async (
-    pub: Pub['id'],
-    beer: Beer['id'],
-    token: string
-  ) => {
+  const addBeerToTap = async (pub: Pub, beer: Beer['id'], token: string) => {
     dispatch(
       addBeerToTapsThunk({
         pub,

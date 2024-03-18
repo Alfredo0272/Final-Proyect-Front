@@ -5,6 +5,7 @@ import { makeImageURL } from '../../services/images';
 import { useUsers } from '../../hooks/use.users';
 import { useLocation } from 'react-router-dom';
 import { usePubs } from '../../hooks/use.pubs';
+import { Pub } from '../../models/pub.model';
 
 export default function BeerDetails() {
   const { currentBeerItem, loadBeerById } = useBeers();
@@ -12,7 +13,6 @@ export default function BeerDetails() {
   const { pubs, addBeerToTap, loadPubs } = usePubs();
   const beer = currentBeerItem?.id;
   const location = useLocation();
-  const [pub, setSelectedPub] = useState<string | null>(null);
   const [showPubList, setShowPubList] = useState(false);
   const token = userStore.get()?.token;
 
@@ -29,9 +29,9 @@ export default function BeerDetails() {
     addBeer(beer!, token!);
   };
 
-  const handleAddBeerToTap = () => {
-    if (pub) {
-      addBeerToTap(beer!, pub, token!);
+  const handleAddBeerToTap = (selectedPub: Pub) => {
+    if (selectedPub) {
+      addBeerToTap(selectedPub, beer!, token!);
     }
   };
 
@@ -66,40 +66,38 @@ export default function BeerDetails() {
             </button>
           )}
 
-          <button onClick={handleDelBeer} className={style.button}>
-            {' '}
-            🗑{' '}
-          </button>
+          {location.pathname === `/details/${currentBeerItem?.id}` && (
+            <button onClick={handleDelBeer} className={style.button}>
+              {' '}
+              🗑{' '}
+            </button>
+          )}
 
           <button onClick={() => setShowPubList(true)} className={style.button}>
             {' '}
             🔼{' '}
           </button>
-
-          {showPubList && (
-            <div className={style.pubList}>
-              <h3>Select a pub:</h3>
-              <ul>
-                {pubs.map((pub) => (
-                  <li key={pub.id} onClick={() => setSelectedPub(pub.id)}>
-                    {' '}
-                    {pub.name}{' '}
-                  </li>
-                ))}
-              </ul>
-              <button
-                onClick={() => {
-                  setShowPubList(false);
-                  handleAddBeerToTap();
-                }}
-                className={style.button}
-              >
-                {' '}
-                Confirm{' '}
-              </button>
-            </div>
-          )}
         </ul>
+
+        {showPubList && (
+          <div className={style.pubList}>
+            <h3>Select a pub:</h3>
+            <ul>
+              {pubs.map((item: Pub) => (
+                <button
+                  key={item.id}
+                  className={style.button}
+                  onClick={() => {
+                    setShowPubList(false);
+                    handleAddBeerToTap(item);
+                  }}
+                >
+                  {item.name}
+                </button>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );

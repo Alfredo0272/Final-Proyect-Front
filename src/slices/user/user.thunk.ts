@@ -4,6 +4,7 @@ import { UsersRepo } from '../../services/users/api.repo.users';
 import { LocalStorage } from '../../services/local.storage';
 import { LoginUser, User } from '../../models/user.model';
 import { Beer } from '../../models/beer.model';
+import { Pub } from '../../models/pub.model';
 
 export const loginThunk = createAsyncThunk<
   LoginResponse,
@@ -65,5 +66,31 @@ export const delBeerToTasteThunk = createAsyncThunk<
 >('delBeer', async ({ beer, repo, userStore }) => {
   const { token } = userStore.get()!;
   const result = await repo.delBeerFromTaste(beer, token);
+  return result;
+});
+
+export const addPubtoVisitedThunk = createAsyncThunk<
+  User,
+  {
+    pub: Pub['id'];
+    repo: UsersRepo;
+    userStore: LocalStorage<{ token: string }>;
+  }
+>('addPub', async ({ pub, repo, userStore }) => {
+  const { token } = userStore.get()!;
+  const result = await repo.addPubtoVisited(pub, token);
+  return result;
+});
+
+export const delPubtoVisitedThunk = createAsyncThunk<
+  User,
+  {
+    pub: Pub['id'];
+    repo: UsersRepo;
+    userStore: LocalStorage<{ token: string }>;
+  }
+>('delPub', async ({ pub, repo, userStore }) => {
+  const { token } = userStore.get()!;
+  const result = await repo.delPubtoVisited(pub, token);
   return result;
 });

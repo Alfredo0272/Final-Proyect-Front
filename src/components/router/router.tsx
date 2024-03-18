@@ -26,7 +26,7 @@ export function Router() {
           <Route path="/pubs" element={<PubList />} />
           <Route path="/user/" element={<UserDetails />}></Route>
           <Route path="/details/:beerId" element={<BeerDetails />}></Route>
-          <Route path="/details/:pubId" element={<PubDetails />}></Route>
+          <Route path="/pubs/:pubId" element={<PubDetails />}></Route>
           <Route path="/*" element={<ErrorPage />} />
         </Routes>
       </Suspense>

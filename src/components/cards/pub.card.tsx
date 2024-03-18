@@ -17,15 +17,15 @@ export default function PubCard({ pub }: Props) {
   }, [loadPubs]);
 
   const despocktPubImg =
-    pub.logo.publicId && makeImageURL(pub.logo.publicId, 160);
+    pub?.logo?.publicId && makeImageURL(pub.logo.publicId, 160);
 
   return (
     <div className={style.main}>
       <div className={style.details}>
-        <Link to={'/details/' + pub.id}>
+        <Link to={'/pubs/' + pub.id}>
           <img
             src={despocktPubImg}
-            alt={`movil beer image de ${pub.name}`}
+            alt={`movil pub image de ${pub.name}`}
             onClick={() => handlePubDetails(pub)}
           />
         </Link>
