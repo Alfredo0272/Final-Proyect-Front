@@ -3,7 +3,7 @@ import { User } from '../../models/user.model';
 import {
   addBeerToTasteThunk,
   addPubtoVisitedThunk,
-  delBeerToTasteThunk,
+  delBeerFromTasteThunk,
   delPubtoVisitedThunk,
   loginThunk,
   loginTokenThunk,
@@ -31,6 +31,7 @@ const userSlice = createSlice({
     logout(state: UserState) {
       state.loggedUser = null;
       state.token = '';
+      return state;
     },
     setCurrentUser(state: UserState, { payload }: PayloadAction<User>) {
       state.loggedUser = payload;
@@ -68,7 +69,7 @@ const userSlice = createSlice({
         }
       )
       .addCase(
-        delBeerToTasteThunk.fulfilled,
+        delBeerFromTasteThunk.fulfilled,
         (state: UserState, { payload }: PayloadAction<User>) => {
           state.loggedUser = payload;
           state.loginLoadState = 'logged';

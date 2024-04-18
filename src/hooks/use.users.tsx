@@ -5,7 +5,7 @@ import { UsersRepo } from '../services/users/api.repo.users';
 import {
   addBeerToTasteThunk,
   addPubtoVisitedThunk,
-  delBeerToTasteThunk,
+  delBeerFromTasteThunk,
   delPubtoVisitedThunk,
   loginThunk,
   loginTokenThunk,
@@ -64,7 +64,7 @@ export function useUsers() {
 
   const delBeer = async (beer: Beer['id'], _token: string) => {
     dispatch(
-      delBeerToTasteThunk({
+      delBeerFromTasteThunk({
         beer,
         repo,
         userStore,

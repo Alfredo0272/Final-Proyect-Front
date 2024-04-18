@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import style from './Pub.details.module.scss';
+import style from './Details.module.scss';
 import { makeImageURL } from '../../services/images';
 import { usePubs } from '../../hooks/use.pubs';
 import { Beer } from '../../models/beer.model';
@@ -16,8 +16,11 @@ export default function PubDetails() {
 
   useEffect(() => {
     loadPubById();
+  }, [loadPubById]);
+
+  useEffect(() => {
     loadBeer();
-  }, [loadPubById, loadBeer]);
+  }, [loadBeer]);
 
   const handleAddVisitedPub = () => {
     addPub(pub!, token!);

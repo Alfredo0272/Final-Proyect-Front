@@ -68,4 +68,20 @@ describe('Given the users slice reducer', () => {
       expect(result).toEqual(expectedState);
     });
   });
+  describe(' When users/logout action is dispatched', () => {
+    test('Then the new state will be returned', () => {
+      const state: UserState = {
+        loggedUser: {} as unknown as User,
+        loginLoadState: 'logged',
+        token: 'token',
+      };
+      const expectedState: UserState = {
+        loggedUser: null,
+        loginLoadState: 'logged',
+        token: '',
+      };
+      const result = userSlice(state, logout());
+      expect(result).toEqual(expectedState);
+    });
+  });
 });

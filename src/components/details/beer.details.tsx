@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useBeers } from '../../hooks/use.beers';
 import style from './Beer.details.module.scss';
 import { makeImageURL } from '../../services/images';
@@ -10,41 +10,51 @@ import { Pub } from '../../models/pub.model';
 export default function BeerDetails() {
   const { currentBeerItem, loadBeerById } = useBeers();
   const { addBeer, delBeer, userStore } = useUsers();
-  const { pubs, addBeerToTap, loadPubs } = usePubs();
-  const beer = currentBeerItem?.id;
+  const { pubs, addBeerToTap, delBeerFromTap, loadPubs } = usePubs();
+  const beerId = currentBeerItem?.id;
   const location = useLocation();
   const [showPubList, setShowPubList] = useState(false);
+  const [pubAction, setPubAction] = useState<'add' | 'delete' | null>(null);
   const token = userStore.get()?.token;
 
   useEffect(() => {
     loadBeerById();
+  }, [loadBeerById]);
+
+  useEffect(() => {
     loadPubs();
-  }, [loadBeerById, loadPubs]);
+  }, [loadPubs]);
 
-  const desktopDetailBeerImg =
-    currentBeerItem?.beerImg.publicId &&
-    makeImageURL(currentBeerItem.beerImg.publicId, 550);
+  const desktopDetailBeerImg = useMemo(
+    () =>
+      currentBeerItem?.beerImg.publicId &&
+      makeImageURL(currentBeerItem.beerImg.publicId, 550),
+    [currentBeerItem]
+  );
 
-  const handleAddBeer = () => {
-    addBeer(beer!, token!);
-  };
-
-  const handleAddBeerToTap = (selectedPub: Pub) => {
-    if (selectedPub) {
-      addBeerToTap(selectedPub, beer!, token!);
+  const handleUserBeerAction = (action: 'add' | 'delete') => {
+    const beerAction = action === 'add' ? addBeer : delBeer;
+    if (beerId) {
+      beerAction(beerId, token!);
     }
   };
 
-  const handleDelBeer = () => {
-    delBeer(beer!, token!);
+  const handlePubActionConfirmation = (selectedPub: Pub) => {
+    if (selectedPub && pubAction) {
+      const pubActionFunction =
+        pubAction === 'add' ? addBeerToTap : delBeerFromTap;
+      pubActionFunction(selectedPub, beerId!, token!);
+      setShowPubList(false);
+      setPubAction(null);
+    }
   };
 
   return (
     <div className={style.main}>
-      <h2 className="main-title"> Details </h2>
+      <h2 className="main-title">Details</h2>
 
       <div className={style.details}>
-        <img src={desktopDetailBeerImg} alt="image"></img>
+        {desktopDetailBeerImg && <img src={desktopDetailBeerImg} alt="image" />}
         <ul>
           <li>
             NAME: <span>{currentBeerItem?.name}</span>
@@ -58,47 +68,65 @@ export default function BeerDetails() {
           <li>
             ALCOHOL: <span>{currentBeerItem?.alcohol}</span>
           </li>
-
-          {location.pathname === `/details/${currentBeerItem?.id}` && (
-            <button onClick={handleAddBeer} className={style.button}>
-              {' '}
-              ❤️{' '}
-            </button>
+          {location.pathname === `/details/${beerId}` && (
+            <>
+              <button
+                onClick={() => handleUserBeerAction('add')}
+                className={style.button}
+              >
+                ❤️
+              </button>
+              <button
+                onClick={() => handleUserBeerAction('delete')}
+                className={style.button}
+              >
+                🗑
+              </button>
+            </>
           )}
 
-          {location.pathname === `/details/${currentBeerItem?.id}` && (
-            <button onClick={handleDelBeer} className={style.button}>
-              {' '}
-              🗑{' '}
-            </button>
+          {location.pathname === `/details/${beerId}` && (
+            <div className={style.actionButtons}>
+              <button
+                onClick={() => {
+                  setShowPubList(true);
+                  setPubAction('add');
+                }}
+                className={style.button}
+              >
+                Add Beer to Pub
+              </button>
+              <button
+                onClick={() => {
+                  setShowPubList(true);
+                  setPubAction('delete');
+                }}
+                className={style.button}
+              >
+                Delete Beer from Pub
+              </button>
+            </div>
           )}
-
-          <button onClick={() => setShowPubList(true)} className={style.button}>
-            {' '}
-            🔼{' '}
-          </button>
         </ul>
-
-        {showPubList && (
-          <div className={style.pubList}>
-            <h3>Select a pub:</h3>
-            <ul>
-              {pubs.map((item: Pub) => (
-                <button
-                  key={item.id}
-                  className={style.button}
-                  onClick={() => {
-                    setShowPubList(false);
-                    handleAddBeerToTap(item);
-                  }}
-                >
-                  {item.name}
-                </button>
-              ))}
-            </ul>
-          </div>
-        )}
       </div>
+
+      {showPubList && (
+        <div className={style.pubList}>
+          <h3>Select a pub:</h3>
+          <ul>
+            {pubs!.map((pub) => (
+              <li key={pub.id}>
+                <button
+                  onClick={() => handlePubActionConfirmation(pub)}
+                  className={style.button}
+                >
+                  {pub.name}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

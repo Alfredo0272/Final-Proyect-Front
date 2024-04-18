@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { ApiRepoPubs } from '../services/pubs/api.repo.pubs';
 import {
   addBeerToTapsThunk,
+  delBeerFromTapsThunk,
   loadPubByIdThunk,
   loadPubThunk,
 } from '../slices/pubs/pub.thunk';
@@ -60,6 +61,17 @@ export function usePubs() {
     );
   };
 
+  const delBeerFromTap = async (pub: Pub, beer: Beer['id'], token: string) => {
+    dispatch(
+      delBeerFromTapsThunk({
+        pub,
+        beer,
+        repo,
+        token,
+      })
+    );
+  };
+
   return {
     pubs,
     currentPubItem,
@@ -68,6 +80,7 @@ export function usePubs() {
     loadPubById,
     handlePubDetails,
     addBeerToTap,
+    delBeerFromTap,
     createPub,
   };
 }

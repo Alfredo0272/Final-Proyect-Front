@@ -13,8 +13,13 @@ const mockRegister: Partial<User> = {
   userName: 'johndoe',
 };
 const mockUserID = '123';
+const mockBeerID = '456';
 const mockToken = 'mocktoken';
-localStorage.setItem('user', JSON.stringify({ token: mockUserID }));
+const mockPubID = '789';
+localStorage.setItem(
+  'user',
+  JSON.stringify({ token: mockUserID, id: mockUserID })
+);
 
 const repo = new UsersRepo();
 describe('Given User ApiRepo class', () => {
@@ -46,7 +51,28 @@ describe('Given User ApiRepo class', () => {
       const result = await repo.registerUser(mockRegister);
       expect(result).toEqual([]);
     });
+    test('then method getUserbyId should be used', async () => {
+      const result = await repo.getUserbyID(mockUserID);
+      expect(result).toEqual([]);
+    });
+    test('then method addBeertoTaste should be used', async () => {
+      const result = await repo.addBeertoTaste(mockBeerID, mockToken);
+      expect(result).toEqual([]);
+    });
+    test('then method delBeerFromTase should be used', async () => {
+      const result = await repo.delBeerFromTaste(mockBeerID, mockToken);
+      expect(result).toEqual([]);
+    });
+    test('then method addPubtoVisited should be used', async () => {
+      const result = await repo.addPubtoVisited(mockPubID, mockToken);
+      expect(result).toEqual([]);
+    });
+    test('then method delPubFromVisited should be used', async () => {
+      const result = await repo.delPubtoVisited(mockPubID, mockToken);
+      expect(result).toEqual([]);
+    });
   });
+
   describe('When we instantiate it and response is bad', () => {
     beforeEach(() => {
       global.fetch = jest.fn().mockResolvedValueOnce({
@@ -61,6 +87,21 @@ describe('Given User ApiRepo class', () => {
     });
     test('Then method reegisterUser dont shoul be used', async () => {
       expect(repo.registerUser(mockRegister)).rejects.toThrow();
+    });
+    test('Then method getUserbyId dont should be used', async () => {
+      expect(repo.getUserbyID(mockUserID)).rejects.toThrow();
+    });
+    test('Then method addBeertoTaste dont should be used', async () => {
+      expect(repo.addBeertoTaste(mockBeerID, mockToken)).rejects.toThrow();
+    });
+    test('Then method delBeerFromTaste dont should be used', async () => {
+      expect(repo.delBeerFromTaste(mockBeerID, mockToken)).rejects.toThrow();
+    });
+    test('Then method addPubtoVisited dont should be used', async () => {
+      expect(repo.addPubtoVisited(mockPubID, mockToken)).rejects.toThrow();
+    });
+    test('Then method delPubtoVisited dont should be used', async () => {
+      expect(repo.delPubtoVisited(mockPubID, mockToken)).rejects.toThrow();
     });
   });
 });

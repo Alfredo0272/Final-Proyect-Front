@@ -14,6 +14,7 @@ export default {
     'src/services/local.storage.ts',
     'src/services/images.ts',
     'src/store/store.tsx',
+    'src/components/router/router.tsx',
     'src/pages/*.ts',
     'src/models/*.ts',
     'src/types/*.ts',

@@ -9,7 +9,7 @@ import {
 
 export type LoginState = 'idle' | 'loading' | 'error';
 
-type PubState = {
+export type PubState = {
   currentPubItem: Pub | null;
   pubState: LoginState;
   pubs: Pub[];
@@ -60,7 +60,7 @@ const pubsSlice = createSlice({
       loadPubThunk.fulfilled,
       (state: PubState, { payload }: PayloadAction<Pub[]>) => {
         state.pubs = payload;
-        state.pubState = 'idle';
+        return state;
       }
     );
     builder.addCase(

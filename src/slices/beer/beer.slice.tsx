@@ -4,7 +4,7 @@ import { createBeerThunk, loadBeerThunks } from './beer.thunk';
 
 export type LoginState = 'idle' | 'logging' | 'error';
 
-type BeerState = {
+export type BeerState = {
   currentBeerItem: Beer | null;
   beerState: LoginState;
   beers: Beer[];

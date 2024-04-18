@@ -51,12 +51,12 @@ export const addBeerToTapsThunk = createAsyncThunk<
 export const delBeerFromTapsThunk = createAsyncThunk<
   Pub,
   {
-    pub: Pub['id'];
+    pub: Pub;
     beer: Beer['id'];
     repo: ApiRepoPubs;
     token: string;
   }
->('addBeerfromTap', async ({ beer, pub, token, repo }) => {
-  const result = await repo.delBeerFromTaps(beer, pub, token);
+>('addBeerfromTap', async ({ pub, beer, token, repo }) => {
+  const result = await repo.delBeerFromTaps(pub, beer, token);
   return result;
 });

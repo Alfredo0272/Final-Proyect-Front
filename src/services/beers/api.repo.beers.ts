@@ -4,6 +4,7 @@ import { Beer } from '../../models/beer.model';
 export class ApiRepoBeers {
   userToken: string | null;
   apiUrl = serverUrl + '/beer/';
+
   constructor() {
     this.userToken = localStorage.getItem('user') || null;
   }

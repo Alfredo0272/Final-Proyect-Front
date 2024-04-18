@@ -49,8 +49,8 @@ export class UsersRepo {
   }
 
   async getUserbyID(_id: User['id']): Promise<User> {
-    const userID = localStorage.get('id');
-    const url = this.apiUrl + userID.id;
+    const userID = localStorage.getItem('id');
+    const url = this.apiUrl + userID;
     const response = await fetch(url);
     if (!response.ok)
       throw new Error(response.status + ' ' + response.statusText);

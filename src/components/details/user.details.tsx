@@ -1,12 +1,25 @@
+import { useEffect } from 'react';
 import { useUsers } from '../../hooks/use.users';
 import { Beer } from '../../models/beer.model';
 import { Pub } from '../../models/pub.model';
 import BeerCard from '../cards/beer.card';
 import PubCard from '../cards/pub.card';
 import style from './Beer.details.module.scss';
+import { useBeers } from '../../hooks/use.beers';
+import { usePubs } from '../../hooks/use.pubs';
 
 export default function UserDetails() {
   const { loggedUser } = useUsers();
+  const { loadBeer } = useBeers();
+  const { loadPubs } = usePubs();
+
+  useEffect(() => {
+    loadBeer();
+  }, [loadBeer]);
+
+  useEffect(() => {
+    loadPubs();
+  }, [loadPubs]);
 
   return (
     <>

@@ -29,7 +29,8 @@ export class ApiRepoPubs {
   }
 
   async loadPubById(pubId: Pub['id']): Promise<Pub> {
-    const response = await fetch(this.apiUrl + pubId);
+    const url = `${this.apiUrl}` + pubId;
+    const response = await fetch(url);
     if (!response.ok)
       throw new Error(response.status + ' ' + response.statusText);
     return response.json();
@@ -51,8 +52,8 @@ export class ApiRepoPubs {
   }
 
   async delBeerFromTaps(
+    pub: Pub,
     beer: Beer['id'],
-    pub: Pub['id'],
     token: string
   ): Promise<Pub> {
     const url = this.apiUrl + 'delBeer/' + beer;
