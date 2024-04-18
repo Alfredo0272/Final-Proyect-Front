@@ -10,8 +10,9 @@ jest.mock('react-redux', () => ({
   useDispatch: jest.fn().mockReturnValue(jest.fn()),
 }));
 
-const mockBeer = {} as unknown as Beer;
+const mockBeer = {} as Beer;
 const mockNewBeer = new FormData();
+
 describe('Given useBeers Hook', () => {
   const TestComponent = () => {
     const { loadBeer, loadBeerById, handleBeerDetails, createBeer } =
@@ -19,8 +20,8 @@ describe('Given useBeers Hook', () => {
 
     return (
       <>
-        <button onClick={() => loadBeer()}></button>
-        <button onClick={() => loadBeerById()}></button>
+        <button onClick={loadBeer}></button>
+        <button onClick={loadBeerById}></button>
         <button onClick={() => handleBeerDetails(mockBeer)}></button>
         <button onClick={() => createBeer(mockNewBeer)}></button>
       </>
@@ -37,38 +38,17 @@ describe('Given useBeers Hook', () => {
     elements = screen.getAllByRole('button');
   });
 
-  describe('When we click button loadBeer', () => {
-    test('Then the dispatch should have been called', async () => {
-      await userEvent.click(elements[0]);
+  const testButtonDispatch = (index: number) => {
+    test(`When we click button at index ${index}, then the dispatch should have been called`, async () => {
+      await userEvent.click(elements[index]);
       expect(useDispatch).toHaveBeenCalled();
     });
-  });
-  describe('When we click button loadBeerById', () => {
-    test('Then the dispatch should have been called', async () => {
-      await userEvent.click(elements[1]);
-      expect(useDispatch).toHaveBeenCalled();
-    });
-  });
-  describe('When we click button handleBeerDetails', () => {
-    test('Then the dispatch should have been called', async () => {
-      await userEvent.click(elements[2]);
-      expect(useDispatch).toHaveBeenCalled();
-    });
-  });
-  describe('When we click button createBeer', () => {
-    test('should return the correct value when userStore.get returns a non-null value', async () => {
-      const mockGet = jest
-        .fn()
-        .mockReturnValue({ token: '123', id: '456', role: 'admin' });
+  };
 
-      jest.mock('../services/local.storage', () => ({
-        LocalStorage: jest.fn().mockImplementation(() => ({
-          get: mockGet,
-        })),
-      }));
-
-      await userEvent.click(elements[3]);
-      expect(useDispatch).toHaveBeenCalled();
-    });
+  describe('When we click different buttons', () => {
+    testButtonDispatch(0);
+    testButtonDispatch(1);
+    testButtonDispatch(2);
+    testButtonDispatch(3);
   });
 });

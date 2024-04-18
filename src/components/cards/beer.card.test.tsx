@@ -30,25 +30,33 @@ describe('given the card element', () => {
       },
     } as unknown as Beer;
 
-    render(
-      <Provider store={appStore}>
-        <Router>
-          <BeerCard beer={beerMock} />
-        </Router>
-      </Provider>
-    );
+    beforeEach(() => {
+      render(
+        <Provider store={appStore}>
+          <Router>
+            <BeerCard beer={beerMock} />
+          </Router>
+        </Provider>
+      );
+    });
+
     test('should render a beer card with the correct information when all beer information is provided', async () => {
-      expect(screen.getByText('NAME:')).toBeInTheDocument();
-      expect(screen.getByText('Beer 1')).toBeInTheDocument();
-      expect(screen.getByText('BREWER:')).toBeInTheDocument();
-      expect(screen.getByText('Brewer 1')).toBeInTheDocument();
-      expect(screen.getByText('STYLE:')).toBeInTheDocument();
-      expect(screen.getByText('Style 1')).toBeInTheDocument();
-      expect(screen.getByText('ALCOHOL:')).toBeInTheDocument();
-      expect(screen.getByText('5%')).toBeInTheDocument();
+      const expectedTexts = [
+        { label: 'NAME:', value: 'Beer 1' },
+        { label: 'BREWER:', value: 'Brewer 1' },
+        { label: 'STYLE:', value: 'Style 1' },
+        { label: 'ALCOHOL:', value: '5%' },
+      ];
+
+      expectedTexts.forEach(({ label, value }) => {
+        expect(screen.getByText(label)).toBeInTheDocument();
+        expect(screen.getByText(value)).toBeInTheDocument();
+      });
+
       expect(
         screen.getByAltText('movil beer image de Beer 1')
       ).toBeInTheDocument();
+
       userEvent.click(screen.getByAltText('movil beer image de Beer 1'));
     });
   });

@@ -30,26 +30,33 @@ describe('given the Pub card element', () => {
       },
     } as unknown as Pub;
 
-    render(
-      <Provider store={appStore}>
-        <Router>
-          <PubCard pub={mockPub} />
-        </Router>
-      </Provider>
-    );
+    beforeEach(() => {
+      render(
+        <Provider store={appStore}>
+          <Router>
+            <PubCard pub={mockPub} />
+          </Router>
+        </Provider>
+      );
+    });
 
     test('should render a pub card with the correct information when all pub information is provided', async () => {
-      expect(screen.getByText('NAME:')).toBeInTheDocument();
-      expect(screen.getByText('Pub 1')).toBeInTheDocument();
-      expect(screen.getByText('OWNER:')).toBeInTheDocument();
-      expect(screen.getByText('Address 1')).toBeInTheDocument();
-      expect(screen.getByText('DIRECTION:')).toBeInTheDocument();
-      expect(screen.getByText('123456789')).toBeInTheDocument();
-      expect(screen.getByText('TAPS:')).toBeInTheDocument();
-      expect(screen.getByText('5')).toBeInTheDocument();
+      const expectedTexts = [
+        { label: 'NAME:', value: 'Pub 1' },
+        { label: 'OWNER:', value: 'Address 1' },
+        { label: 'DIRECTION:', value: '123456789' },
+        { label: 'TAPS:', value: '5' },
+      ];
+
+      expectedTexts.forEach(({ label, value }) => {
+        expect(screen.getByText(label)).toBeInTheDocument();
+        expect(screen.getByText(value)).toBeInTheDocument();
+      });
+
       expect(
         screen.getByAltText('movil pub image de Pub 1')
       ).toBeInTheDocument();
+
       userEvent.click(screen.getByAltText('movil pub image de Pub 1'));
     });
   });
