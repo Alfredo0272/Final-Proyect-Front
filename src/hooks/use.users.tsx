@@ -2,14 +2,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import { LocalStorage } from '../services/local.storage';
 import { AppDispatch, RootState } from '../store/store';
 import { UsersRepo } from '../services/users/api.repo.users';
-import { loginThunk, loginTokenThunk } from '../slices/user.thunk';
+import {
+  addBeerToTasteThunk,
+  addPubtoVisitedThunk,
+  delBeerFromTasteThunk,
+  delPubtoVisitedThunk,
+  loginThunk,
+  loginTokenThunk,
+} from '../slices/user/user.thunk';
 import { LoginUser, User } from '../models/user.model';
-import * as ac from '../slices/user.slice';
-import { logout } from '../slices/user.slice';
+import * as ac from '../slices/user/user.slice';
+import { logout } from '../slices/user/user.slice';
 import { useMemo } from 'react';
+import { Beer } from '../models/beer.model';
+import { Pub } from '../models/pub.model';
 
 export function useUsers() {
-  const userStore = new LocalStorage<{ token: string; id: string }>('user');
+  const userStore = new LocalStorage<{
+    token: string;
+    id: string;
+    role: string;
+  }>('user');
   const dispatch = useDispatch<AppDispatch>();
   const repo = useMemo(() => new UsersRepo(), []);
   const { loggedUser } = useSelector((state: RootState) => state.usersState);
@@ -39,12 +52,56 @@ export function useUsers() {
     userStore.remove();
   };
 
+  const addBeer = async (beer: Beer['id'], _token: string) => {
+    dispatch(
+      addBeerToTasteThunk({
+        beer,
+        repo,
+        userStore,
+      })
+    );
+  };
+
+  const delBeer = async (beer: Beer['id'], _token: string) => {
+    dispatch(
+      delBeerFromTasteThunk({
+        beer,
+        repo,
+        userStore,
+      })
+    );
+  };
+
+  const addPub = async (pub: Pub['id'], _token: string) => {
+    dispatch(
+      addPubtoVisitedThunk({
+        pub,
+        repo,
+        userStore,
+      })
+    );
+  };
+
+  const delPub = async (pub: Pub['id'], _token: string) => {
+    dispatch(
+      delPubtoVisitedThunk({
+        pub,
+        repo,
+        userStore,
+      })
+    );
+  };
+
   return {
     login,
     loginWithToken,
     register,
     logoutUser,
     makeLogOut,
+    addBeer,
+    delBeer,
+    addPub,
+    delPub,
     loggedUser,
     userStore,
   };

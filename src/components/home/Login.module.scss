@@ -1,0 +1,102 @@
+@import '../../resources';
+
+.main {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1vh;
+  margin: 3vh;
+  flex-direction: column;
+
+  .h2 {
+    font-size: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .form {
+    gap: 2vh;
+    width: 80%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    border-radius: 10px;
+    justify-content: space-around;
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    align-items: center;
+
+    .email,
+    .password {
+      font-size: 3vh;
+      margin: 20px;
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 3rem;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 1vh;
+
+      input {
+        gap: 1vh;
+        border-radius: 1vh;
+        width: 22rem;
+        height: 1rem;
+        padding: 0.5rem;
+      }
+    }
+
+    button {
+      margin-bottom: 2vh;
+      gap: 1vh;
+      border-radius: 1rem;
+      background: gray;
+      color: black;
+      height: 2rem;
+      gap: 1rem;
+      padding: 0 1rem;
+      width: 5rem;
+      justify-content: center;
+      transition: background 0.5s ease;
+
+      &:hover {
+        background-color: #f3e9e9;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    .form {
+      width: 90%;
+    }
+  }
+
+  @media only screen and (max-width: 400px) {
+    .h2 {
+      font-size: 4vh;
+    }
+
+    .form {
+      .email,
+      .password {
+        font-size: 2.5vh;
+        gap: 1rem;
+      }
+
+      input {
+        width: 3rem;
+      }
+
+      button {
+        width: 4rem;
+      }
+    }
+  }
+}

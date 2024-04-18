@@ -17,8 +17,17 @@ const mockNewUser = {} as unknown as Partial<User>;
 
 describe('Given useUsers Hook', () => {
   const TestComponent = () => {
-    const { logoutUser, login, loginWithToken, register, makeLogOut } =
-      useUsers();
+    const {
+      logoutUser,
+      login,
+      loginWithToken,
+      register,
+      makeLogOut,
+      addBeer,
+      delBeer,
+      addPub,
+      delPub,
+    } = useUsers();
 
     return (
       <>
@@ -27,6 +36,10 @@ describe('Given useUsers Hook', () => {
         <button onClick={() => loginWithToken()}></button>
         <button onClick={() => register(mockNewUser)}> </button>
         <button onClick={() => logoutUser()}> </button>
+        <button onClick={() => addBeer('beer', 'token')}></button>
+        <button onClick={() => delBeer('beer', 'token')}></button>
+        <button onClick={() => addPub('pub', 'token')}></button>
+        <button onClick={() => delPub('pub', 'token')}></button>
       </>
     );
   };
@@ -71,6 +84,30 @@ describe('Given useUsers Hook', () => {
   describe('When we click button logoutUser ', () => {
     test('Then the dispacht should have been called', async () => {
       await userEvent.click(elements[4]);
+      expect(useDispatch()).toHaveBeenCalled();
+    });
+  });
+  describe('When we click button addBeer ', () => {
+    test('Then the dispacht should have been called', async () => {
+      await userEvent.click(elements[5]);
+      expect(useDispatch()).toHaveBeenCalled();
+    });
+  });
+  describe('When we click button delBeer ', () => {
+    test('Then the dispacht should have been called', async () => {
+      await userEvent.click(elements[6]);
+      expect(useDispatch()).toHaveBeenCalled();
+    });
+  });
+  describe('When we click button addPub ', () => {
+    test('Then the dispacht should have been called', async () => {
+      await userEvent.click(elements[7]);
+      expect(useDispatch()).toHaveBeenCalled();
+    });
+  });
+  describe('When we click button delPub ', () => {
+    test('Then the dispacht should have been called', async () => {
+      await userEvent.click(elements[8]);
       expect(useDispatch()).toHaveBeenCalled();
     });
   });

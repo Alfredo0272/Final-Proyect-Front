@@ -1,0 +1,57 @@
+import { useEffect } from 'react';
+import { useUsers } from '../../hooks/use.users';
+import { Beer } from '../../models/beer.model';
+import { Pub } from '../../models/pub.model';
+import BeerCard from '../cards/beer.card';
+import PubCard from '../cards/pub.card';
+import style from './Beer.details.module.scss';
+import { useBeers } from '../../hooks/use.beers';
+import { usePubs } from '../../hooks/use.pubs';
+
+export default function UserDetails() {
+  const { loggedUser } = useUsers();
+  const { loadBeer } = useBeers();
+  const { loadPubs } = usePubs();
+
+  useEffect(() => {
+    loadBeer();
+  }, [loadBeer]);
+
+  useEffect(() => {
+    loadPubs();
+  }, [loadPubs]);
+
+  return (
+    <>
+      <div className={style.main}>
+        <h2 className="main-title"> Hola {loggedUser?.userName}</h2>
+        <div className={style.details}>
+          <ul>
+            <li>
+              NAME: <span>{loggedUser?.name}</span>
+            </li>
+            <li>
+              SURNAME: <span>{loggedUser?.surname}</span>
+            </li>
+            <li>
+              EMAIL: <span>{loggedUser?.email}</span>
+            </li>
+            <li>
+              EDAD: <span>{loggedUser?.age}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <ul className="Pub-list">
+        {loggedUser?.visitado.map((item: Pub) => (
+          <PubCard key={item.id} pub={item} />
+        ))}
+      </ul>
+      <ul className="Beer-list">
+        {loggedUser?.probada.map((item: Beer) => (
+          <BeerCard key={item.id} beer={item} />
+        ))}
+      </ul>
+    </>
+  );
+}
