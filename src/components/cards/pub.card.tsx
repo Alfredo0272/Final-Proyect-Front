@@ -1,6 +1,5 @@
 import { Pub } from '../../models/pub.model';
 import { usePubs } from '../../hooks/use.pubs';
-import { useEffect } from 'react';
 import { makeImageURL } from '../../services/images';
 import style from './Cards.module.scss';
 import { Link } from 'react-router-dom';
@@ -10,11 +9,7 @@ type Props = {
 };
 
 export default function PubCard({ pub }: Props) {
-  const { loadPubs, handlePubDetails } = usePubs();
-
-  useEffect(() => {
-    loadPubs();
-  }, [loadPubs]);
+  const { handlePubDetails } = usePubs();
 
   const despocktPubImg =
     pub?.logo?.publicId && makeImageURL(pub.logo.publicId, 160);
@@ -30,16 +25,16 @@ export default function PubCard({ pub }: Props) {
           />
         </Link>
         <ul>
-          <li key={pub.id}>
+          <li key={`${pub.id}-name`}>
             NAME: <span>{pub.name}</span>
           </li>
-          <li key={pub.id}>
+          <li key={`${pub.id}-owner`}>
             OWNER: <span>{pub.owner}</span>
           </li>
-          <li key={pub.id}>
+          <li key={`${pub.id}-direction`}>
             DIRECTION: <span>{pub.direction}</span>
           </li>
-          <li key={pub.id}>
+          <li key={`${pub.id}-taps`}>
             TAPS: <span>{pub.taps}</span>
           </li>
         </ul>

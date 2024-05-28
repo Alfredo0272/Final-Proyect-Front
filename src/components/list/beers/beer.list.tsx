@@ -16,8 +16,10 @@ export default function BeerList() {
       <h2>Beers</h2>
 
       <ul className={style.list}>
-        {beers.map((item: Beer) => (
-          <BeerCard key={item.id} beer={item} />
+        {beers.map((beer: Beer) => (
+          <li key={beer.id}>
+            <BeerCard beer={beer} />
+          </li>
         ))}
       </ul>
     </div>

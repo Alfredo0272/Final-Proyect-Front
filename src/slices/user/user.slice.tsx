@@ -4,7 +4,7 @@ import {
   addBeerToTasteThunk,
   addPubtoVisitedThunk,
   delBeerFromTasteThunk,
-  delPubtoVisitedThunk,
+  delPubFromVisitedThunk,
   loginThunk,
   loginTokenThunk,
 } from './user.thunk';
@@ -83,7 +83,7 @@ const userSlice = createSlice({
         }
       )
       .addCase(
-        delPubtoVisitedThunk.fulfilled,
+        delPubFromVisitedThunk.fulfilled,
         (state: UserState, { payload }: PayloadAction<User>) => {
           state.loggedUser = payload;
           state.loginLoadState = 'logged';

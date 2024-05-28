@@ -96,7 +96,7 @@ export class UsersRepo {
     return response.json();
   }
 
-  async delPubtoVisited(pub: Pub['id'], token: string): Promise<User> {
+  async delPubFromVisited(pub: Pub['id'], token: string): Promise<User> {
     const url = this.apiUrl + 'delPub/' + pub;
     const response = await fetch(url, {
       method: 'PATCH',

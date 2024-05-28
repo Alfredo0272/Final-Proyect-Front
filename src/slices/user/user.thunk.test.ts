@@ -6,7 +6,7 @@ import {
   addBeerToTasteThunk,
   addPubtoVisitedThunk,
   delBeerFromTasteThunk,
-  delPubtoVisitedThunk,
+  delPubFromVisitedThunk,
   loginThunk,
   loginTokenThunk,
   registerThunk,
@@ -88,8 +88,8 @@ describe('Given...', () => {
         get: jest.fn().mockReturnValue({ token }),
       } as unknown as LocalStorage<{ token: string }>;
       const data = { ...sharedData, pub, userStore };
-      await appStore.dispatch(delPubtoVisitedThunk(data));
-      expect(data.repo.delPubtoVisited).toHaveBeenCalled();
+      await appStore.dispatch(delPubFromVisitedThunk(data));
+      expect(data.repo.delPubFromVisited).toHaveBeenCalled();
     });
   });
 });

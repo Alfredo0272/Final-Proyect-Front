@@ -81,7 +81,7 @@ export const addPubtoVisitedThunk = createAsyncThunk<
   return result;
 });
 
-export const delPubtoVisitedThunk = createAsyncThunk<
+export const delPubFromVisitedThunk = createAsyncThunk<
   User,
   {
     pub: Pub['id'];
@@ -90,6 +90,6 @@ export const delPubtoVisitedThunk = createAsyncThunk<
   }
 >('delPub', async ({ pub, repo, userStore }) => {
   const { token } = userStore.get()!;
-  const result = await repo.delPubtoVisited(pub, token);
+  const result = await repo.delPubFromVisited(pub, token);
   return result;
 });
