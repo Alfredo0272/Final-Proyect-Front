@@ -45,9 +45,13 @@ export function useUsers() {
     const userStoreData = userStore.get();
     if (userStoreData) {
       const { token } = userStoreData;
-      dispatch(loginTokenThunk({ token, repo, userStore })).finally(() => {
-        setLoading(false);
-      });
+      dispatch(loginTokenThunk({ token, repo, userStore }))
+        .then(() => {
+          setLoading(false);
+        })
+        .catch(() => {
+          setLoading(false);
+        });
     } else {
       setLoading(false);
     }

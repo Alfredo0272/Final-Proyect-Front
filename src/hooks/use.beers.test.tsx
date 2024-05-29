@@ -41,7 +41,7 @@ describe('Given useBeers Hook', () => {
   const testButtonDispatch = (index: number) => {
     test(`When we click button at index ${index}, then the dispatch should have been called`, async () => {
       await userEvent.click(elements[index]);
-      expect(useDispatch).toHaveBeenCalled();
+      expect(useDispatch()).toHaveBeenCalled();
     });
   };
 

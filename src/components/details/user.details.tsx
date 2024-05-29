@@ -45,11 +45,13 @@ export default function UserDetails() {
           </ul>
         </div>
       </div>
+      <h3 className={style.main}>Visitados</h3>
       <ul className="Pub-list">
         {loggedUser?.visitado.map((item: Pub) => (
           <PubCard key={`pub-${item.id}`} pub={item} />
         ))}
       </ul>
+      <h3 className={style.main}>Probados</h3>
       <ul className="Beer-list">
         {loggedUser?.probada.map((item: Beer) => (
           <BeerCard key={`beer-${item.id}`} beer={item} />

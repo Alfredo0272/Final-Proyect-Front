@@ -26,7 +26,7 @@ describe('Given...', () => {
         addBeertoTaste: jest.fn().mockResolvedValue({}),
         delBeerFromTaste: jest.fn().mockResolvedValue({}),
         addPubtoVisited: jest.fn().mockResolvedValue({}),
-        delPubtoVisited: jest.fn().mockResolvedValue({}),
+        delPubFromVisited: jest.fn().mockResolvedValue({}),
       } as unknown as UsersRepo,
 
       userStore: {
@@ -50,46 +50,46 @@ describe('Given...', () => {
     test('Then it should dispatch loginTokenThunk and update user store', async () => {
       const data = { ...sharedData, token: '' };
       await appStore.dispatch(loginTokenThunk(data));
-      expect(data.repo.login).toHaveBeenCalled();
+      expect(data.repo.loginWithToken).toHaveBeenCalled();
       expect(data.userStore.set).toHaveBeenCalledWith({ token: '' });
     });
-    test('Then register it should be dispatched', async () => {
+    test('Then register should be dispatched', async () => {
       const data = { ...sharedData, newUser };
       await appStore.dispatch(registerThunk(data));
       expect(data.repo.registerUser).toHaveBeenCalled();
     });
-    test('Then add beer should.. ', async () => {
+    test('Then add beer should be dispatched', async () => {
       const userStore = {
         get: jest.fn().mockReturnValue({ token }),
       } as unknown as LocalStorage<{ token: string }>;
       const data = { ...sharedData, beer, userStore };
       await appStore.dispatch(addBeerToTasteThunk(data));
-      expect(data.repo.addBeertoTaste).toHaveBeenCalledWith('', '');
+      expect(data.repo.addBeertoTaste).toHaveBeenCalledWith(beer, token);
     });
-    test('Then dell beer should.. ', async () => {
+    test('Then del beer should be dispatched', async () => {
       const userStore = {
         get: jest.fn().mockReturnValue({ token }),
       } as unknown as LocalStorage<{ token: string }>;
       const data = { ...sharedData, beer, userStore };
       await appStore.dispatch(delBeerFromTasteThunk(data));
-      expect(data.repo.delBeerFromTaste).toHaveBeenCalled();
+      expect(data.repo.delBeerFromTaste).toHaveBeenCalledWith(beer, token);
     });
 
-    test('Then add pub should.. ', async () => {
+    test('Then add pub should be dispatched', async () => {
       const userStore = {
         get: jest.fn().mockReturnValue({ token }),
       } as unknown as LocalStorage<{ token: string }>;
       const data = { ...sharedData, pub, userStore };
       await appStore.dispatch(addPubtoVisitedThunk(data));
-      expect(data.repo.addPubtoVisited).toHaveBeenCalledWith('', '');
+      expect(data.repo.addPubtoVisited).toHaveBeenCalledWith(pub, token);
     });
-    test('Then del pub should.. ', async () => {
+    test('Then del pub should be dispatched', async () => {
       const userStore = {
         get: jest.fn().mockReturnValue({ token }),
       } as unknown as LocalStorage<{ token: string }>;
       const data = { ...sharedData, pub, userStore };
       await appStore.dispatch(delPubFromVisitedThunk(data));
-      expect(data.repo.delPubFromVisited).toHaveBeenCalled();
+      expect(data.repo.delPubFromVisited).toHaveBeenCalledWith(pub, token);
     });
   });
 });
