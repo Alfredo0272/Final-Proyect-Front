@@ -20,19 +20,26 @@ export function usePubs() {
   );
   const dispatch = useDispatch<AppDispatch>();
   const repo = useMemo(() => new ApiRepoPubs(), []);
-  const userStore = new LocalStorage<{
-    token: string;
-    id: string;
-    role: string;
-  }>('user');
+  const userStore = useMemo(
+    () =>
+      new LocalStorage<{
+        token: string;
+        id: string;
+        role: string;
+      }>('user'),
+    []
+  );
 
-  const createPub = async (newPub: FormData) => {
-    const userStoreData = userStore.get();
-    if (userStoreData) {
-      const { token } = userStoreData;
-      await repo.createPub(newPub, token);
-    }
-  };
+  const createPub = useCallback(
+    async (newPub: FormData) => {
+      const userStoreData = userStore.get();
+      if (userStoreData) {
+        const { token } = userStoreData;
+        await repo.createPub(newPub, token);
+      }
+    },
+    [repo, userStore]
+  );
 
   const loadPubs = useCallback(async () => {
     dispatch(loadPubThunk(repo));
@@ -44,39 +51,47 @@ export function usePubs() {
     if (pubID) {
       dispatch(loadPubByIdThunk({ pubID, repo }));
     }
-  }, [dispatch, repo]);
+  }, [dispatch, repo, pubID]);
 
-  const handlePubDetails = async (pub: Pub) => {
-    dispatch(setCurrentPubItem(pub));
-  };
+  const handlePubDetails = useCallback(
+    async (pub: Pub) => {
+      dispatch(setCurrentPubItem(pub));
+    },
+    [dispatch]
+  );
 
-  const addBeerToTap = async (pub: Pub, beer: Beer['id'], token: string) => {
-    dispatch(
-      addBeerToTapsThunk({
-        pub,
-        beer,
-        repo,
-        token,
-      })
-    );
-  };
+  const addBeerToTap = useCallback(
+    async (pub: Pub, beer: Beer['id'], token: string) => {
+      dispatch(
+        addBeerToTapsThunk({
+          pub,
+          beer,
+          repo,
+          token,
+        })
+      );
+    },
+    [dispatch, repo]
+  );
 
-  const delBeerFromTap = async (pub: Pub, beer: Beer['id'], token: string) => {
-    dispatch(
-      delBeerFromTapsThunk({
-        pub,
-        beer,
-        repo,
-        token,
-      })
-    );
-  };
+  const delBeerFromTap = useCallback(
+    async (pub: Pub, beer: Beer['id'], token: string) => {
+      dispatch(
+        delBeerFromTapsThunk({
+          pub,
+          beer,
+          repo,
+          token,
+        })
+      );
+    },
+    [dispatch, repo]
+  );
 
   return {
     pubs,
     currentPubItem,
     loadPubs,
-    dispatch,
     loadPubById,
     handlePubDetails,
     addBeerToTap,

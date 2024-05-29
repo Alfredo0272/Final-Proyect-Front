@@ -6,91 +6,128 @@ import {
   addBeerToTasteThunk,
   addPubtoVisitedThunk,
   delBeerFromTasteThunk,
-  delPubtoVisitedThunk,
+  delPubFromVisitedThunk,
   loginThunk,
   loginTokenThunk,
 } from '../slices/user/user.thunk';
 import { LoginUser, User } from '../models/user.model';
 import * as ac from '../slices/user/user.slice';
 import { logout } from '../slices/user/user.slice';
-import { useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Beer } from '../models/beer.model';
 import { Pub } from '../models/pub.model';
 
 export function useUsers() {
-  const userStore = new LocalStorage<{
-    token: string;
-    id: string;
-    role: string;
-  }>('user');
+  const [loading, setLoading] = useState(true);
+
+  const userStore = useMemo(
+    () =>
+      new LocalStorage<{
+        token: string;
+        id: string;
+        role: string;
+      }>('user'),
+    []
+  );
+
   const dispatch = useDispatch<AppDispatch>();
   const repo = useMemo(() => new UsersRepo(), []);
   const { loggedUser } = useSelector((state: RootState) => state.usersState);
 
-  const login = (loginUser: LoginUser) => {
-    dispatch(loginThunk({ loginUser, repo, userStore }));
-  };
+  const login = useCallback(
+    (loginUser: LoginUser) => {
+      dispatch(loginThunk({ loginUser, repo, userStore }));
+    },
+    [dispatch, repo, userStore]
+  );
 
-  const loginWithToken = () => {
+  const loginWithToken = useCallback(() => {
     const userStoreData = userStore.get();
     if (userStoreData) {
       const { token } = userStoreData;
-      dispatch(loginTokenThunk({ token, repo, userStore }));
+      dispatch(loginTokenThunk({ token, repo, userStore }))
+        .then(() => {
+          setLoading(false);
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
     }
-  };
+  }, [dispatch, repo, userStore]);
 
-  const register = (newUser: Partial<User>) => {
-    repo.registerUser(newUser);
-  };
+  const register = useCallback(
+    (newUser: Partial<User>) => {
+      repo.registerUser(newUser);
+    },
+    [repo]
+  );
 
-  const makeLogOut = () => {
+  const makeLogOut = useCallback(() => {
     dispatch(ac.logout());
-  };
+  }, [dispatch]);
 
-  const logoutUser = () => {
+  const logoutUser = useCallback(() => {
     dispatch(logout());
     userStore.remove();
-  };
+  }, [dispatch, userStore]);
 
-  const addBeer = async (beer: Beer['id'], _token: string) => {
-    dispatch(
-      addBeerToTasteThunk({
-        beer,
-        repo,
-        userStore,
-      })
-    );
-  };
+  const addBeer = useCallback(
+    async (beer: Beer['id'], _token: string) => {
+      dispatch(
+        addBeerToTasteThunk({
+          beer,
+          repo,
+          userStore,
+        })
+      );
+    },
+    [dispatch, repo, userStore]
+  );
 
-  const delBeer = async (beer: Beer['id'], _token: string) => {
-    dispatch(
-      delBeerFromTasteThunk({
-        beer,
-        repo,
-        userStore,
-      })
-    );
-  };
+  const delBeer = useCallback(
+    async (beer: Beer['id'], _token: string) => {
+      dispatch(
+        delBeerFromTasteThunk({
+          beer,
+          repo,
+          userStore,
+        })
+      );
+    },
+    [dispatch, repo, userStore]
+  );
 
-  const addPub = async (pub: Pub['id'], _token: string) => {
-    dispatch(
-      addPubtoVisitedThunk({
-        pub,
-        repo,
-        userStore,
-      })
-    );
-  };
+  const addPub = useCallback(
+    async (pub: Pub['id'], _token: string) => {
+      dispatch(
+        addPubtoVisitedThunk({
+          pub,
+          repo,
+          userStore,
+        })
+      );
+    },
+    [dispatch, repo, userStore]
+  );
 
-  const delPub = async (pub: Pub['id'], _token: string) => {
-    dispatch(
-      delPubtoVisitedThunk({
-        pub,
-        repo,
-        userStore,
-      })
-    );
-  };
+  const delPub = useCallback(
+    async (pub: Pub['id'], _token: string) => {
+      dispatch(
+        delPubFromVisitedThunk({
+          pub,
+          repo,
+          userStore,
+        })
+      );
+    },
+    [dispatch, repo, userStore]
+  );
+
+  useEffect(() => {
+    loginWithToken();
+  }, [loginWithToken]);
 
   return {
     login,
@@ -104,5 +141,6 @@ export function useUsers() {
     delPub,
     loggedUser,
     userStore,
+    loading,
   };
 }

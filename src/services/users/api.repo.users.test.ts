@@ -68,7 +68,7 @@ describe('Given User ApiRepo class', () => {
       expect(result).toEqual([]);
     });
     test('then method delPubFromVisited should be used', async () => {
-      const result = await repo.delPubtoVisited(mockPubID, mockToken);
+      const result = await repo.delPubFromVisited(mockPubID, mockToken);
       expect(result).toEqual([]);
     });
   });
@@ -101,7 +101,7 @@ describe('Given User ApiRepo class', () => {
       expect(repo.addPubtoVisited(mockPubID, mockToken)).rejects.toThrow();
     });
     test('Then method delPubtoVisited dont should be used', async () => {
-      expect(repo.delPubtoVisited(mockPubID, mockToken)).rejects.toThrow();
+      expect(repo.delPubFromVisited(mockPubID, mockToken)).rejects.toThrow();
     });
   });
 });

@@ -1,25 +1,28 @@
 import { useEffect } from 'react';
 import { useUsers } from '../../hooks/use.users';
-import { Beer } from '../../models/beer.model';
-import { Pub } from '../../models/pub.model';
+import { useBeers } from '../../hooks/use.beers';
+import { usePubs } from '../../hooks/use.pubs';
 import BeerCard from '../cards/beer.card';
 import PubCard from '../cards/pub.card';
 import style from './Beer.details.module.scss';
-import { useBeers } from '../../hooks/use.beers';
-import { usePubs } from '../../hooks/use.pubs';
+import { Pub } from '../../models/pub.model';
+import { Beer } from '../../models/beer.model';
+
+const Loading = () => <div>Loading...</div>;
 
 export default function UserDetails() {
-  const { loggedUser } = useUsers();
+  const { loggedUser, loading } = useUsers();
   const { loadBeer } = useBeers();
   const { loadPubs } = usePubs();
 
   useEffect(() => {
     loadBeer();
-  }, [loadBeer]);
-
-  useEffect(() => {
     loadPubs();
-  }, [loadPubs]);
+  }, [loadBeer, loadPubs]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -42,14 +45,16 @@ export default function UserDetails() {
           </ul>
         </div>
       </div>
+      <h3 className={style.main}>Visitados</h3>
       <ul className="Pub-list">
         {loggedUser?.visitado.map((item: Pub) => (
-          <PubCard key={item.id} pub={item} />
+          <PubCard key={`pub-${item.id}`} pub={item} />
         ))}
       </ul>
+      <h3 className={style.main}>Probados</h3>
       <ul className="Beer-list">
         {loggedUser?.probada.map((item: Beer) => (
-          <BeerCard key={item.id} beer={item} />
+          <BeerCard key={`beer-${item.id}`} beer={item} />
         ))}
       </ul>
     </>

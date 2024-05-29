@@ -14,10 +14,11 @@ export default function PubList() {
   return (
     <div className={style.list}>
       <h2>Pubs</h2>
-
       <ul className={style.list}>
-        {pubs.map((item: Pub) => (
-          <PubCard key={item.id} pub={item} />
+        {pubs.map((pub: Pub) => (
+          <li key={pub.id}>
+            <PubCard pub={pub} />
+          </li>
         ))}
       </ul>
     </div>

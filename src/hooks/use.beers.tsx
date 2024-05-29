@@ -14,35 +14,45 @@ export function useBeers() {
   );
   const dispatch = useDispatch<AppDispatch>();
   const repo = useMemo(() => new ApiRepoBeers(), []);
-  const userStore = new LocalStorage<{
-    token: string;
-    id: string;
-    role: string;
-  }>('user');
+  const userStore = useMemo(
+    () =>
+      new LocalStorage<{
+        token: string;
+        id: string;
+        role: string;
+      }>('user'),
+    []
+  );
 
-  const createBeer = (newBeer: FormData) => {
-    const userStoreData = userStore.get();
-    if (userStoreData) {
-      const { token } = userStoreData;
-      repo.createBeer(newBeer, token);
-    }
-  };
+  const createBeer = useCallback(
+    (newBeer: FormData) => {
+      const userStoreData = userStore.get();
+      if (userStoreData) {
+        const { token } = userStoreData;
+        repo.createBeer(newBeer, token);
+      }
+    },
+    [repo, userStore]
+  );
 
-  const loadBeer = useCallback(async () => {
+  const loadBeer = useCallback(() => {
     dispatch(loadBeerThunks(repo));
   }, [dispatch, repo]);
 
   const { beerId } = useParams();
 
-  const loadBeerById = useCallback(async () => {
+  const loadBeerById = useCallback(() => {
     if (beerId) {
       dispatch(loadBeerByIdThunk({ beerId, repo }));
     }
-  }, [dispatch, repo]);
+  }, [dispatch, repo, beerId]);
 
-  const handleBeerDetails = async (beer: Beer) => {
-    dispatch(setCurrentBeerItem(beer));
-  };
+  const handleBeerDetails = useCallback(
+    (beer: Beer) => {
+      dispatch(setCurrentBeerItem(beer));
+    },
+    [dispatch]
+  );
 
   return {
     beers,
