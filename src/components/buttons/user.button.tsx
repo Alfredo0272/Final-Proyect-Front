@@ -10,48 +10,67 @@ export function UserButtons() {
   );
   const { logoutUser } = useUsers();
   const location = useLocation();
-  const registerLink = (
-    <Link to="/register">
-      <button className={style.route}>Register</button>
-    </Link>
-  );
-  const homeLink = (
-    <Link to="/home">
-      <button className={style.route}>Back</button>
-    </Link>
-  );
+
+  const links = {
+    register: (
+      <Link to="/register">
+        <button className={style.route}>Register</button>
+      </Link>
+    ),
+    home: (
+      <Link to="/home">
+        <button className={style.route}>Back</button>
+      </Link>
+    ),
+    addBeer: (
+      <Link to="/addBeer" className={style.container}>
+        <button className={style.route}>Create</button>
+      </Link>
+    ),
+    addPubs: (
+      <Link to="/addPubs" className={style.container}>
+        <button className={style.route}>Register Pub</button>
+      </Link>
+    ),
+    beers: (
+      <Link to="/beers" className={style.container}>
+        <button className={style.route}>Beers</button>
+      </Link>
+    ),
+    user: (
+      <Link to="/user" className={style.container}>
+        <button className={style.route}>User</button>
+      </Link>
+    ),
+    logout: (
+      <Link to="/" className={style.container} onClick={logoutUser}>
+        <button className={style.route}>Logout</button>
+      </Link>
+    ),
+    pubs: (
+      <Link to="/pubs" className={style.container}>
+        <button className={style.route}>Pubs</button>
+      </Link>
+    ),
+  };
 
   return (
     <section className={style.section}>
-      {!currentUserItem && location.pathname === '/' && registerLink}
-      {!currentUserItem && location.pathname === '/home' && registerLink}
-      {!currentUserItem && location.pathname === '/register' && homeLink}
-      {!currentUserItem && location.pathname === '/*' && homeLink}
+      {!currentUserItem &&
+        ['/', '/home'].includes(location.pathname) &&
+        links.register}
+      {!currentUserItem && location.pathname === '/register' && links.home}
+      {!currentUserItem && location.pathname === '/*' && links.home}
       {currentUserItem && (
         <>
-          {location.pathname !== '/addBeer' && (
-            <Link to="/addBeer" className={style.container}>
-              <button className={style.route}>Create</button>
-            </Link>
-          )}
+          {location.pathname !== '/addBeer' && links.addBeer}
           {location.pathname !== '/addPubs' &&
-            currentUserItem.role === 'Admin' && (
-              <Link to="/addPubs" className={style.container}>
-                <button className={style.route}>Registre Pub</button>
-              </Link>
-            )}
-          <Link to="/beers" className={style.container}>
-            <button className={style.route}>Beers</button>
-          </Link>
-          <Link to="/user" className={style.container}>
-            <button className={style.route}>User</button>
-          </Link>
-          <Link to="/" className={style.container} onClick={logoutUser}>
-            <button className={style.route}>Logout</button>
-          </Link>
-          <Link to="/pubs" className={style.container}>
-            <button className={style.route}>Pubs</button>
-          </Link>
+            currentUserItem.role === 'Admin' &&
+            links.addPubs}
+          {links.beers}
+          {links.user}
+          {links.logout}
+          {links.pubs}
         </>
       )}
     </section>

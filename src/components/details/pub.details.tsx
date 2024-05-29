@@ -55,8 +55,14 @@ export default function PubDetails() {
           </li>
 
           <div className={style.buttons}>
-            <button onClick={handleAddVisitedPub}> ❤️ </button>
-            <button onClick={handleDelVisitedPub}> 🗑 </button>
+            <button onClick={handleAddVisitedPub} className={style.button}>
+              {' '}
+              ❤️{' '}
+            </button>
+            <button onClick={handleDelVisitedPub} className={style.button}>
+              {' '}
+              🗑{' '}
+            </button>
           </div>
           <ul className="Beer-list">
             {currentPubItem?.beers.map((item: Beer) => (

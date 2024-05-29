@@ -1,4 +1,5 @@
 @import '../../resources';
+
 form {
   display: flex;
   flex-direction: column;
@@ -7,30 +8,56 @@ form {
   justify-content: space-around;
   height: 70vh;
   width: 50%;
-  margin: 0;
-  margin-left: 25%;
+  margin: 0 auto;
   margin-top: 2rem;
-  font-family: Libre Franklin;
+  font-family: 'Libre Franklin', sans-serif;
   font-size: 20px;
-  font-style: normal;
   font-weight: 400;
   line-height: normal;
   align-items: center;
 
   .inputs {
-    border-radius: 2rem;
-    display: flow-root;
-    flex-direction: row;
-    align-items: center;
-    margin: 1rem auto;
-    fill: #d9d9d9;
-    height: 1.375rem;
-    flex-shrink: 0;
+    .name {
+      margin: 1rem auto;
+    }
+    .inputs {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin: 1rem auto;
+      border-radius: 2rem;
+      fill: #d9d9d9;
+      height: 2.5rem;
+      flex-shrink: 0;
+      width: 80%;
+    }
   }
 
-  .submit {
-    align-content: center;
-    margin: 1rem auto;
-    flex-shrink: 0;
+  .inputs input {
+    margin-right: 1rem;
+  }
+}
+.submit {
+  appearance: unset;
+  text-decoration: none;
+  border-radius: 1rem;
+  background: gray;
+  color: black;
+  height: 2rem;
+  padding: 0 1rem;
+  width: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.5s ease, box-shadow 0.5s ease;
+  font-family: 'Libre Franklin', sans-serif;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background-color: rgba(237, 5, 5, 0.8);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
   }
 }

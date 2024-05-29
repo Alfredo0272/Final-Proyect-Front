@@ -103,7 +103,7 @@ export default function BeerDetails() {
                 }}
                 className={style.button}
               >
-                Delete Beer from Pub
+                Del Beer from Pub
               </button>
             </div>
           )}
