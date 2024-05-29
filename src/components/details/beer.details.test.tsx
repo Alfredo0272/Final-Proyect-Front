@@ -122,7 +122,9 @@ describe('Given Details Component', () => {
         </Provider>
       </Router>
     );
-    fireEvent.click(screen.getByText('Add Beer to Pub'));
+    fireEvent.click(
+      screen.getByText((content) => content.startsWith('Add Beer to Pub'))
+    );
 
     expect(mockLoadPubs).toHaveBeenCalled();
     expect(screen.getByText('Select a pub:')).toBeInTheDocument();
@@ -138,7 +140,9 @@ describe('Given Details Component', () => {
       </Router>
     );
 
-    fireEvent.click(screen.getByText('Delete Beer from Pub'));
+    fireEvent.click(
+      screen.getByText((content) => content.startsWith('Del Beer from Pub'))
+    );
 
     expect(mockLoadPubs).toHaveBeenCalled();
     expect(screen.getByText('Select a pub:')).toBeInTheDocument();
@@ -154,7 +158,9 @@ describe('Given Details Component', () => {
       </Router>
     );
 
-    fireEvent.click(screen.getByText('Add Beer to Pub'));
+    fireEvent.click(
+      screen.getByText((content) => content.startsWith('Add Beer to Pub'))
+    );
     fireEvent.click(screen.getByText('Pub 1'));
 
     expect(mockAddBeerToTap).toHaveBeenCalledWith(
@@ -175,7 +181,9 @@ describe('Given Details Component', () => {
       </Router>
     );
 
-    fireEvent.click(screen.getByText('Delete Beer from Pub'));
+    fireEvent.click(
+      screen.getByText((content) => content.startsWith('Del Beer from Pub'))
+    );
     fireEvent.click(screen.getByText('Pub 1'));
 
     expect(mockDelBeerFromTap).toHaveBeenCalledWith(
