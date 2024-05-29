@@ -26,7 +26,7 @@ describe('UserButtons Component and logged User', () => {
 
     expect(screen.getByRole('button', { name: 'Create' })).toBeInTheDocument();
     expect(
-      screen.getByRole('button', { name: 'Registre Pub' })
+      screen.getByRole('button', { name: 'Register Pub' })
     ).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Beers' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'User' })).toBeInTheDocument();

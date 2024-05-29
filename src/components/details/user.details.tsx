@@ -4,7 +4,7 @@ import { useBeers } from '../../hooks/use.beers';
 import { usePubs } from '../../hooks/use.pubs';
 import BeerCard from '../cards/beer.card';
 import PubCard from '../cards/pub.card';
-import style from './Beer.details.module.scss';
+import style from './User.details.module.scss';
 import { Pub } from '../../models/pub.model';
 import { Beer } from '../../models/beer.model';
 
@@ -27,7 +27,7 @@ export default function UserDetails() {
   return (
     <>
       <div className={style.main}>
-        <h2 className="main-title"> Hola {loggedUser?.userName}</h2>
+        <h2 className={style.main_title}>Hola {loggedUser?.userName}</h2>
         <div className={style.details}>
           <ul>
             <li>
@@ -46,13 +46,13 @@ export default function UserDetails() {
         </div>
       </div>
       <h3 className={style.main}>Visitados</h3>
-      <ul className="Pub-list">
+      <ul className={style.list}>
         {loggedUser?.visitado.map((item: Pub) => (
           <PubCard key={`pub-${item.id}`} pub={item} />
         ))}
       </ul>
-      <h3 className={style.main}>Probados</h3>
-      <ul className="Beer-list">
+      <h3 className={style.main}>Probadas</h3>
+      <ul className={style.list}>
         {loggedUser?.probada.map((item: Beer) => (
           <BeerCard key={`beer-${item.id}`} beer={item} />
         ))}

@@ -40,8 +40,10 @@ export default function CreateBeer() {
           <label htmlFor="beerImg">Beer Image: </label>
           <input type="file" id="beerImg" name="beerImg" required />
         </div>
-        <div className={style.submit}>
-          <button type="submit">Create</button>
+        <div className={style.inputs}>
+          <button type="submit" className={style.submit}>
+            Create
+          </button>
         </div>
       </form>
     </>

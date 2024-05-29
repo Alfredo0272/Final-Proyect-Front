@@ -1,0 +1,97 @@
+@import '../../resources';
+
+.main {
+  font-family: 'Libre Franklin', sans-serif;
+  text-align: center;
+  padding: 1rem;
+
+  .main_title {
+    padding: 1rem;
+    margin: 1rem;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+  }
+
+  .details {
+    background-color: #f3f3f3;
+    padding: 1rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    ul {
+      list-style: none;
+      padding: 1rem;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Centra los elementos de la lista horizontalmente */
+    }
+
+    li {
+      padding: 1rem;
+      margin: 1rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    span {
+      font-weight: normal;
+    }
+  }
+
+  .list {
+    list-style: none;
+    padding: 1rem;
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    li {
+      padding: 1rem;
+      margin: 1rem;
+      margin-bottom: 1rem;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: 1rem;
+    align-self: flex-end; /* Coloca los botones a la derecha */
+  }
+
+  .button:hover {
+    background-color: #45a049;
+  }
+}
+
+@media (max-width: 900px) {
+  .main {
+    .details {
+      padding: 1rem;
+    }
+
+    ul {
+      font-size: 1.2rem;
+    }
+
+    .button {
+      font-size: 1.2rem;
+    }
+  }
+}
