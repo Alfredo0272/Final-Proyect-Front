@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 export default function Home() {
   const [hasLogin, setHasLogin] = useState(false);
   const { login } = useUsers();
-
   const navigate = useNavigate();
 
   const handleSubmit = async (event: SyntheticEvent) => {
@@ -19,6 +18,7 @@ export default function Home() {
       password: (element.elements.namedItem('password') as HTMLInputElement)
         .value,
     } as LoginUser;
+
     if (loggedUser.email === '' || loggedUser.password === '') {
       Swal.fire({
         width: '20em',
@@ -51,20 +51,22 @@ export default function Home() {
       {!hasLogin && (
         <form onSubmit={handleSubmit} aria-label="form" className={style.form}>
           <div className={style.email}>
-            <label htmlFor="email" className="email">
-              Email:{' '}
-            </label>
-            <input type="email" id="email" name="email" role="textbox" />
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              role="textbox"
+              required
+            />
           </div>
           <div className={style.password}>
-            <label htmlFor="password">Password: </label>
-            <input type="text" id="password" name="password" />
+            <label htmlFor="password">Password:</label>
+            <input type="password" id="password" name="password" required />
           </div>
-          <div>
-            <button type="submit" className={style.submit}>
-              Sign In
-            </button>
-          </div>
+          <button type="submit" className={style.submit}>
+            Sign In
+          </button>
         </form>
       )}
     </section>

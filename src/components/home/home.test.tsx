@@ -36,13 +36,13 @@ describe('Given the Register component', () => {
     });
 
     test('Then the handleLoginUser function should be called on form submit', async () => {
-      const form = screen.getByRole('form');
-      const button = screen.getByRole('button');
-      const inputs = screen.getAllByRole('textbox');
-      await userEvent.type(inputs[0], 'pepe@pepe');
-      await userEvent.type(inputs[1], '12345');
-      userEvent.click(button);
-      await fireEvent.submit(form);
+      const emailInput = screen.getByLabelText(/email/i);
+      const passwordInput = screen.getByLabelText(/password/i);
+      const button = screen.getByRole('button', { name: /sign in/i });
+
+      await userEvent.type(emailInput, 'pepe@pepe');
+      await userEvent.type(passwordInput, '12345');
+      fireEvent.click(button);
       expect(useUsers().login).toHaveBeenCalled();
     });
     test('Then the handleRegisterUser should be called on form submit', async () => {
