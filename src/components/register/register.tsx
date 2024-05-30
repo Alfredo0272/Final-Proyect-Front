@@ -55,47 +55,57 @@ export default function Register() {
 
   return (
     <>
-      <header title="Be Beers"></header>
-      <h2>Register</h2>
-      {!hasRegister && (
-        <form onSubmit={handleSubmit} aria-label="form">
-          <div className={style.inputs}>
-            <label htmlFor="name">Name: </label>
-            <input type="text" id="name" name="name" />
+      <section className={style.main}>
+        <h2>Register</h2>
+
+        {!hasRegister && (
+          <form
+            onSubmit={handleSubmit}
+            aria-label="form"
+            className={style.form}
+          >
+            <div className={style.inputs}>
+              <label htmlFor="name">Name: </label>
+              <input type="text" id="name" name="name" />
+            </div>
+            <div className={style.inputs}>
+              <label htmlFor="surname">Surname: </label>
+              <input type="text" id="surname" name="surname" />
+            </div>
+            <div className={style.inputs}>
+              <label htmlFor="age">age: </label>
+              <input type="number" id="age" name="age" />
+            </div>
+            <div className={style.inputs}>
+              <label htmlFor="userName">User name: </label>
+              <input type="text" id="user" name="user" />
+            </div>
+            <div className={style.inputs}>
+              <label htmlFor="email">Email: </label>
+              <input type="email" id="email" name="email" role="textbox" />
+            </div>
+            <div className={style.inputs}>
+              <label htmlFor="password">Password: </label>
+              <input type="text" id="password" name="password" />
+            </div>
+            <div className={style.submit}>
+              <button type="submit" className={style.button}>
+                Sign Up
+              </button>
+            </div>
+          </form>
+        )}
+        {hasRegister && (
+          <div className={style.registered}>
+            <p>Registration successful</p>
+            <Link to={'/home/'}>
+              <button type="button" className={style.button}>
+                Continue
+              </button>
+            </Link>
           </div>
-          <div className={style.inputs}>
-            <label htmlFor="surname">Surname: </label>
-            <input type="text" id="surname" name="surname" />
-          </div>
-          <div className={style.inputs}>
-            <label htmlFor="age">age: </label>
-            <input type="number" id="age" name="age" />
-          </div>
-          <div className={style.inputs}>
-            <label htmlFor="userName">User name: </label>
-            <input type="text" id="user" name="user" />
-          </div>
-          <div className={style.inputs}>
-            <label htmlFor="email">Email: </label>
-            <input type="email" id="email" name="email" role="textbox" />
-          </div>
-          <div className={style.inputs}>
-            <label htmlFor="password">Password: </label>
-            <input type="text" id="password" name="password" />
-          </div>
-          <div className={style.submit}>
-            <button type="submit">Sign Up</button>
-          </div>
-        </form>
-      )}
-      {hasRegister && (
-        <div>
-          <p>Registro correcto</p>
-          <Link to={'/home/'}>
-            <button type="button">Continuar</button>
-          </Link>
-        </div>
-      )}
+        )}
+      </section>
     </>
   );
 }
