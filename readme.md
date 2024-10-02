@@ -4,7 +4,7 @@
 
 ### Descripcion
 
-De Beers es una aplicacion web diseñada dentro del Bootcamp de ISDI coders Madrid, en la promocion Q4 2023; su diseño y cometido se basa en una redsocial que gira entorno de las cervezas, tanto para crearlas y subirlas a la base de datos, como para añadir las ya existentes a tu base de datos privada y llevar un seguimiento de las cervezas probadas
+De Beers es una aplicacion web diseñada dentro del Bootcamp de ISDI coders Madrid, en la promocion Q4 2023; su diseño y cometido se basa en una redsocial que gira entorno de las cervezas, tanto para crearlas y subirlas a la base de datos, como para añadir las ya existentes a tu base de datos privada y llevar un seguimiento de las cervezas probadas, asi como una lista de pubs donde los admin puede subir las cervezas que tienen en cada establecimiento segun su numero de grifos o taps, los usuarios tambien pueden añadir los pubs a su lista de pubs visitados.
 
 ### Funcionalidades Principales
 
@@ -18,7 +18,15 @@ Los usuarios acceden a todas las cervezas subidas por la comunidad, donde podran
 
 -Detalles del producto
 
-Clicando en la imagen los usuarios acederan a los detalles de la misma con una mejor disposicion de los datos y los botones que le permiten agregar la cerveza a su cuenta
+Clicando en la imagen los usuarios acederan a los detalles de la misma con una mejor disposicion de los datos y los botones que le permiten agregar la cerveza a su cuenta o pub
+
+-Listado de Pubs
+
+Los usuarios acceden a todos los pubs creados por los admins, donde podran seleccionar la que han probado
+
+-Detalle de los pubs
+
+Clicando en la imagen los usuarios acederan a los detalles de la misma con una mejor disposicion de los datos y los botones que le permiten agregar el pub a su cuenta
 
 ### Tecnologia Empleada
 
@@ -44,11 +52,11 @@ Configuración del Frontend:
 
 1º Clone el repositorio:
 
-`https://github.com/isdi-coders-2023/Alfredo-Lozano-Final-Project-front-202309-mad.git`
+`https://github.com/Alfredo0272/Final-Proyect-Front.git`
 
 2º Navegue al directorio del proyecto:
 
-`cd Alfredo-Lozano-Final-Project-front-202309-mad`
+`cd Final-Project-Front`
 
 3º Instale las dependencias:
 
