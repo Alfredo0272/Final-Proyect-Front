@@ -37,7 +37,7 @@ Clicando en la imagen los usuarios acederan a los detalles de la misma con una m
   React (Frontend)
   Node (Backend)
 
--Pruebas:
+- Pruebas:
 
 Todas las funcionalidades están testadas con Jest hasta niveles optimos de produccion.
 
