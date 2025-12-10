@@ -10,11 +10,17 @@ export const loginThunk = createAsyncThunk<
   {
     loginUser: LoginUser;
     repo: UsersRepo;
-    userStore: LocalStorage<{ token: string }>;
+    userStore: LocalStorage<{ token: string; id: string; role: string }>;
   }
 >('login', async ({ loginUser, repo, userStore }) => {
   const result = await repo.login(loginUser);
-  userStore.set({ token: result.token });
+
+  userStore.set({
+    token: result.token,
+    id: result.user.id,
+    role: result.user.role,
+  });
+
   return result;
 });
 
@@ -23,11 +29,17 @@ export const loginTokenThunk = createAsyncThunk<
   {
     token: string;
     repo: UsersRepo;
-    userStore: LocalStorage<{ token: string }>;
+    userStore: LocalStorage<{ token: string; id: string; role: string }>;
   }
 >('loginWithToken', async ({ token, repo, userStore }) => {
   const loginResponse = await repo.loginWithToken(token);
-  userStore.set({ token: loginResponse.token });
+
+  userStore.set({
+    token: loginResponse.token,
+    id: loginResponse.user.id,
+    role: loginResponse.user.role,
+  });
+
   return loginResponse;
 });
 
@@ -47,11 +59,11 @@ export const addBeerToTasteThunk = createAsyncThunk<
   {
     beer: string;
     repo: UsersRepo;
-    userStore: LocalStorage<{ token: string }>;
+    userStore: LocalStorage<{ token: string; id: string }>;
   }
 >('addBeer', async ({ beer, repo, userStore }) => {
-  const { token } = userStore.get()!;
-  const result = await repo.addBeertoTaste(beer, token);
+  const userData = userStore.get()!;
+  const result = await repo.addBeertoTaste(beer, userData.token, userData.id);
   return result;
 });
 
@@ -60,11 +72,11 @@ export const delBeerFromTasteThunk = createAsyncThunk<
   {
     beer: string;
     repo: UsersRepo;
-    userStore: LocalStorage<{ token: string }>;
+    userStore: LocalStorage<{ token: string; id: string }>;
   }
 >('delBeer', async ({ beer, repo, userStore }) => {
-  const { token } = userStore.get()!;
-  const result = await repo.delBeerFromTaste(beer, token);
+  const userData = userStore.get()!;
+  const result = await repo.delBeerFromTaste(beer, userData.token, userData.id);
   return result;
 });
 
@@ -73,11 +85,11 @@ export const addPubtoVisitedThunk = createAsyncThunk<
   {
     pub: Pub['id'];
     repo: UsersRepo;
-    userStore: LocalStorage<{ token: string }>;
+    userStore: LocalStorage<{ token: string; id: string }>;
   }
 >('addPub', async ({ pub, repo, userStore }) => {
-  const { token } = userStore.get()!;
-  const result = await repo.addPubtoVisited(pub, token);
+  const userData = userStore.get()!;
+  const result = await repo.addPubtoVisited(pub, userData.token, userData.id);
   return result;
 });
 
@@ -86,10 +98,10 @@ export const delPubFromVisitedThunk = createAsyncThunk<
   {
     pub: Pub['id'];
     repo: UsersRepo;
-    userStore: LocalStorage<{ token: string }>;
+    userStore: LocalStorage<{ token: string; id: string }>;
   }
 >('delPub', async ({ pub, repo, userStore }) => {
-  const { token } = userStore.get()!;
-  const result = await repo.delPubFromVisited(pub, token);
+  const userData = userStore.get()!;
+  const result = await repo.delPubFromVisited(pub, userData.token, userData.id);
   return result;
 });

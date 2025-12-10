@@ -48,61 +48,84 @@ export class UsersRepo {
     return response.json();
   }
 
-  async getUserbyID(_id: User['id']): Promise<User> {
-    const userID = localStorage.getItem('id');
-    const url = this.apiUrl + userID;
+  async getUserbyID(id: User['id']): Promise<User> {
+    const url = this.apiUrl + id;
     const response = await fetch(url);
     if (!response.ok)
       throw new Error(response.status + ' ' + response.statusText);
     return response.json();
   }
 
-  async addBeertoTaste(beer: Beer['id'], token: string): Promise<User> {
+  async addBeertoTaste(
+    beer: Beer['id'],
+    token: string,
+    userId: string
+  ): Promise<User> {
     const url = this.apiUrl + 'addBeer/' + beer;
     const response = await fetch(url, {
       method: 'PATCH',
       headers: {
         Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
       },
+      body: JSON.stringify({ userId }),
     });
     if (!response.ok)
       throw new Error(response.status + ' ' + response.statusText);
     return response.json();
   }
 
-  async delBeerFromTaste(beer: Beer['id'], token: string): Promise<User> {
+  async delBeerFromTaste(
+    beer: Beer['id'],
+    token: string,
+    userId: string
+  ): Promise<User> {
     const url = this.apiUrl + 'delBeer/' + beer;
     const response = await fetch(url, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
       },
+      body: JSON.stringify({ userId }),
     });
     if (!response.ok)
       throw new Error(response.status + ' ' + response.statusText);
     return response.json();
   }
 
-  async addPubtoVisited(pub: Pub['id'], token: string): Promise<User> {
+  async addPubtoVisited(
+    pub: Pub['id'],
+    token: string,
+    userId: string
+  ): Promise<User> {
     const url = this.apiUrl + 'addPub/' + pub;
     const response = await fetch(url, {
       method: 'PATCH',
       headers: {
         Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
       },
+      body: JSON.stringify({ userId }),
     });
     if (!response.ok)
       throw new Error(response.status + ' ' + response.statusText);
     return response.json();
   }
 
-  async delPubFromVisited(pub: Pub['id'], token: string): Promise<User> {
+  async delPubFromVisited(
+    pub: Pub['id'],
+    token: string,
+    userId: string
+  ): Promise<User> {
     const url = this.apiUrl + 'delPub/' + pub;
     const response = await fetch(url, {
       method: 'PATCH',
       headers: {
         Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
       },
+      body: JSON.stringify({ userId }),
     });
     if (!response.ok)
       throw new Error(response.status + ' ' + response.statusText);
